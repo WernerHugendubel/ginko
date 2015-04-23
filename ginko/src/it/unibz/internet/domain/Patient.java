@@ -1,5 +1,6 @@
 package it.unibz.internet.domain;
 
+import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -8,9 +9,13 @@ import java.util.Set;
  *
  * @author Werner Frei <freiwe@gmail.com>
  */
-public class Patient  {
+public class Patient implements Serializable {
 
-    private int patientId;
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 4133642468888988950L;
+	private int patientId;
     private String name;
     private int bednr;
     private Set<Restriction> restrictions = new HashSet<Restriction>(0);

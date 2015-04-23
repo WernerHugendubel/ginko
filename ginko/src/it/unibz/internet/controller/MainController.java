@@ -13,7 +13,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-@WebServlet(urlPatterns = { "/", "/addPatient", "/deletePatient"})
+@WebServlet(urlPatterns = { "/oldroot", "/addPatient", "/deletePatient"})
 public class MainController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 

@@ -19,10 +19,9 @@ public class PatientDBService {
 		PreparedStatement pstmt = null;
 		try {
 			pstmt = con
-					.prepareStatement("INSERT INTO patient(patientid,name,bednr) VALUES(?,?,?)");
-			pstmt.setInt(1, pat.getPatientId());
-			pstmt.setString(2, pat.getName());
-			pstmt.setInt(3, pat.getBednr());
+					.prepareStatement("INSERT INTO patient(name,bednr) VALUES(?,?)");
+			pstmt.setString(1, pat.getName());
+			pstmt.setInt(2, pat.getBednr());
 			pstmt.execute();
 		} catch (SQLException e) {
 			e.printStackTrace();

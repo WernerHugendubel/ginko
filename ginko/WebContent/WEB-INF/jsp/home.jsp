@@ -11,7 +11,8 @@
 <body>
 <ul>
    <li><a href='${pageContext.request.contextPath}'>Home</a></li>
-   <li><a href='${pageContext.request.contextPath}/addPatient'>Add Patient</a></li>
+   
+   <li><a href='${pageContext.request.contextPath}/patientAdd'>Add Patient</a></li>
 </ul>
 
 <h3>Patients</h3>

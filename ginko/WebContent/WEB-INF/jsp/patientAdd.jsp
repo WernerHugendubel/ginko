@@ -9,21 +9,16 @@
 </head>
 <body>
 
-<div id='cssmenu'>
-<ul>
-   <li class=''><a href='${pageContext.request.contextPath}'>Home</a></li>
-</ul>
-</div>
-	<form name="patientform" action="addPatientCheck" method="post">
-		<input name="patientid" type="text" placeholder="patientid" />
-		<br />
-		<input name="patientname" type="text" placeholder="patientname" />
+   <a href='${pageContext.request.contextPath}'>Home</a> <br />
+   <h3>Add new patient</h3>
+	<form name="patientform" action="patientAdd" method="post">
+		Patient name: <input name="patientName" type="text" placeholder="patientname" />
 		<br />	
-		<input name="bednr" type="text" placeholder="bednr" />
+		Bed number: <input name="bedNr" type="text" placeholder="bednr" />
 		<br />	
-			
 		<input type="submit" name="submit" value="Add..." class="button" />
-		
+		<br />	
+        <a href='${pageContext.request.contextPath}'>cancel</a> <br />
 	</form>
 </body>
 </html>
