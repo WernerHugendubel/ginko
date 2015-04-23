@@ -1,6 +1,10 @@
 package it.unibz.internet.controller;
 
+import it.unibz.internet.db.PatientDBService;
+import it.unibz.internet.domain.Patient;
+
 import java.io.IOException;
+import java.util.List;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -19,8 +23,12 @@ public class MainController extends HttpServlet {
 		String applicationContextPath = request.getContextPath();
 
 		if (request.getRequestURI().equals(applicationContextPath + "/")) {
+			PatientDBService patientDBService = new PatientDBService();
+			List<Patient> patientlist = patientDBService.getPatients();
 			RequestDispatcher dispatcher = request
 					.getRequestDispatcher("/WEB-INF/jsp/home.jsp");
+			request.getSession().setAttribute("patientlist", patientlist);
+			
 			dispatcher.forward(request, response);
 		} else if (request.getRequestURI().equals(
 				applicationContextPath + "/addPatient")) {

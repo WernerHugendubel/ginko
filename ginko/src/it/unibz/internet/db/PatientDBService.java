@@ -4,7 +4,11 @@ import it.unibz.internet.domain.Patient;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -22,8 +26,8 @@ public class PatientDBService {
 			pstmt.execute();
 		} catch (SQLException e) {
 			e.printStackTrace();
-			Logger.getLogger(PatientDBService.class.getName()).log(Level.SEVERE,
-					null, e);
+			Logger.getLogger(PatientDBService.class.getName()).log(
+					Level.SEVERE, null, e);
 		} finally {
 
 			try {
@@ -49,10 +53,11 @@ public class PatientDBService {
 			pstmt = con
 					.prepareStatement("DELETE FROM patient WHERE patientid=?");
 			pstmt.setInt(1, id);
+			pstmt.execute();
 		} catch (SQLException ex) {
 			ex.printStackTrace();
-			Logger.getLogger(PatientDBService.class.getName()).log(Level.SEVERE,
-					null, ex);
+			Logger.getLogger(PatientDBService.class.getName()).log(
+					Level.SEVERE, null, ex);
 		} finally {
 			try {
 				if (pstmt != null) {
@@ -68,110 +73,104 @@ public class PatientDBService {
 			}
 		}
 	}
-	
-	//
-	// public void update(Employee e) {
-	// Connection con = null;
-	// PreparedStatement pstmt = null;
-	// try {
-	// Class.forName(JDBC_DRIVER);
-	// con = DriverManager.getConnection(DATABASE_URL, USERNAME, PASSWORD);
-	// pstmt =
-	// con.prepareStatement("UPDATE emp SET empName=?, phone=?, email=?, salary=?, desig=? WHERE empId=?");
-	// pstmt.setString(1, e.getName());
-	// pstmt.setString(2, e.getPhone());
-	// pstmt.setString(3, e.getEmail());
-	// pstmt.setFloat(4, e.getSalary());
-	// pstmt.setString(5, e.getDesignation());
-	// pstmt.setInt(6, e.getEmpId());
-	// pstmt.executeUpdate();
-	// } catch (SQLException | ClassNotFoundException ex) {
-	//
-	// } finally {
-	// try {
-	// if (pstmt != null) {
-	// pstmt.close();
-	// }
-	// if (con != null) {
-	// con.close();
-	// }
-	// } catch (SQLException ex) {
-	// Logger.getLogger(EmployeeBean.class.getName()).log(Level.SEVERE, null,
-	// ex);
-	// }
-	// }
-	// }
-	//
-	// public Employee getEmployee(int id) {
-	// Employee emp = null;
-	// Connection con = null;
-	// Statement stmt = null;
-	// try {
-	// Class.forName(JDBC_DRIVER);
-	// con = DriverManager.getConnection(DATABASE_URL, USERNAME, PASSWORD);
-	// stmt = con.createStatement();
-	// ResultSet rs = stmt.executeQuery("SELECT * FROM emp WHERE empId=" + id);
-	// if (rs.next()) {
-	// emp = new Employee();
-	// emp.setEmpId(rs.getInt(1));
-	// emp.setName(rs.getString(2));
-	// emp.setPhone(rs.getString(3));
-	// emp.setEmail(rs.getString(4));
-	// emp.setSalary(rs.getFloat(5));
-	// emp.setDesignation(rs.getString(6));
-	// }
-	// } catch (SQLException | ClassNotFoundException ex) {
-	//
-	// } finally {
-	// try {
-	// if (stmt != null) {
-	// stmt.close();
-	// }
-	// if (con != null) {
-	// con.close();
-	// }
-	// } catch (SQLException ex) {
-	// Logger.getLogger(EmployeeBean.class.getName()).log(Level.SEVERE, null,
-	// ex);
-	// }
-	// }
-	// return emp;
-	// }
-	//
-	// public List<Employee> getEmployees() {
-	// List<Employee> list = new ArrayList<>();
-	// Connection con = null;
-	// Statement stmt = null;
-	// try {
-	// Class.forName(JDBC_DRIVER);
-	// con = DriverManager.getConnection(DATABASE_URL, USERNAME, PASSWORD);
-	// stmt = con.createStatement();
-	// ResultSet rs = stmt.executeQuery("SELECT * FROM emp ORDER BY empId");
-	// while (rs.next()) {
-	// Employee emp = new Employee();
-	// emp.setEmpId(rs.getInt(1));
-	// emp.setName(rs.getString(2));
-	// emp.setPhone(rs.getString(3));
-	// emp.setEmail(rs.getString(4));
-	// emp.setSalary(rs.getFloat(5));
-	// emp.setDesignation(rs.getString(6));
-	// list.add(emp);
-	// }
-	// } catch (SQLException | ClassNotFoundException ex) {
-	//
-	// } finally {
-	// try {
-	// if (stmt != null) {
-	// stmt.close();
-	// }
-	// if (con != null) {
-	// con.close();
-	// }
-	// } catch (SQLException ex) {
-	//
-	// }
-	// }
-	// return list;
-	// }
 
+	public void update(Patient p) {
+		Connection con = DatabaseConnectionFactory.createConnection();
+		PreparedStatement pstmt = null;
+		try {
+			pstmt = con
+					.prepareStatement("UPDATE patient SET name=?, bednr=? WHERE patientId=?");
+			pstmt.setString(1, p.getName());
+			pstmt.setInt(2, p.getBednr());
+			pstmt.setInt(3, p.getPatientId());
+			pstmt.executeUpdate();
+		} catch (SQLException ex) {
+			ex.printStackTrace();
+			Logger.getLogger(PatientDBService.class.getName()).log(
+					Level.SEVERE, null, ex);
+		} finally {
+			try {
+				if (pstmt != null) {
+					pstmt.close();
+				}
+				if (con != null) {
+					con.close();
+				}
+			} catch (SQLException ex) {
+				ex.printStackTrace();
+				Logger.getLogger(PatientDBService.class.getName()).log(
+						Level.SEVERE, null, ex);
+			}
+		}
+	}
+
+	public Patient getPatient(int id) {
+		Patient pat = null;
+		Connection con = DatabaseConnectionFactory.createConnection();
+		Statement stmt = null;
+		try {
+			stmt = con.createStatement();
+			ResultSet rs = stmt.executeQuery("SELECT * FROM patient WHERE patientId=" + id);
+			if (rs.next()) {
+				pat = new Patient();
+				pat.setPatientId(rs.getInt(1));
+				pat.setName(rs.getString(2));
+				pat.setBednr(rs.getInt(3));
+			}
+		} catch (SQLException ex) {
+			ex.printStackTrace();
+			Logger.getLogger(PatientDBService.class.getName()).log(
+					Level.SEVERE, null, ex);
+		} finally {
+			try {
+				if (stmt != null) {
+					stmt.close();
+				}
+				if (con != null) {
+					con.close();
+				}
+			} catch (SQLException ex) {
+				ex.printStackTrace();
+				Logger.getLogger(PatientDBService.class.getName()).log(
+						Level.SEVERE, null, ex);
+			}
+		}
+		return pat;
+	}
+	
+
+	public List<Patient> getPatients() {
+		List<Patient> list = new ArrayList<>();
+		Connection con = DatabaseConnectionFactory.createConnection();
+		Statement stmt = null;
+		try {
+			stmt = con.createStatement();
+			ResultSet rs = stmt.executeQuery("SELECT * FROM patient ORDER BY patientId");
+			while (rs.next()) {
+				Patient pat = new Patient();
+				pat.setPatientId(rs.getInt(1));
+				pat.setName(rs.getString(2));
+				pat.setBednr(rs.getInt(3));
+				list.add(pat);
+			}
+		} catch (SQLException ex) {
+			ex.printStackTrace();
+			Logger.getLogger(PatientDBService.class.getName()).log(
+					Level.SEVERE, null, ex);
+		} finally {
+			try {
+				if (stmt != null) {
+					stmt.close();
+				}
+				if (con != null) {
+					con.close();
+				}
+			} catch (SQLException ex) {
+				ex.printStackTrace();
+				Logger.getLogger(PatientDBService.class.getName()).log(
+						Level.SEVERE, null, ex);
+			}
+		}
+		return list;
+	}
 }

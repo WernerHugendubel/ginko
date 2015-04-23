@@ -1,10 +1,10 @@
 package it.unibz.internet.controller;
 
 
+import it.unibz.internet.db.PatientDBService;
+import it.unibz.internet.domain.Patient;
+
 import java.io.IOException;
-import java.sql.Connection;
-import java.sql.SQLException;
-import java.sql.Statement;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -12,15 +12,6 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
-
-
-
-
-
-import it.unibz.internet.db.DatabaseConnectionFactory;
-import it.unibz.internet.db.PatientDBService;
-import it.unibz.internet.domain.Patient;
 
 /**
  * Servlet implementation class PatientController
@@ -40,11 +31,12 @@ public class PatientController extends HttpServlet {
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {		
 		
+    	//Read values from request
     	int patientId = Integer.parseInt(request.getParameter("patientid"));
 		String patname=request.getParameter("patientname");
 		int patientbednr=Integer.parseInt(request.getParameter("bednr"));
 
-		//create patient dao object
+		//create patient POJO object
 		Patient pat = new Patient();
 		pat.setPatientId(patientId);
 		pat.setName(patname);
@@ -52,7 +44,7 @@ public class PatientController extends HttpServlet {
 		
 		//TODO: Business logic: check patient constraints before save
 		
-		
+		//save to db
 		this.patientDBService.addNew(pat);
 		
 		//pass generated patient to next page

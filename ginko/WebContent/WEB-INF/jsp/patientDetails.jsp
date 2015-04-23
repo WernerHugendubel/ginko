@@ -11,9 +11,7 @@
 	<p>Details for Patient:</p>
 	<p>Patient ID: ${requestScope.newPatient.patientId}</p>
 	<p>name: ${requestScope.newPatient.name}</p>
-	<p>Bed nr: ${requestScope.newPatient.bednr}</p>
-
-	</div>
+	<p>Bednr: ${requestScope.newPatient.bednr}</p>
 
 
 </body>
