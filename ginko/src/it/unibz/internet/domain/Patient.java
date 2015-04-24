@@ -19,9 +19,17 @@ public class Patient implements Serializable {
     private String name;
     private int bednr;
     private Set<Restriction> restrictions = new HashSet<Restriction>(0);
-    private Set<Ingredient> ingredients = new HashSet<Ingredient>(0);
+    private Set<Order> orders = new HashSet<Order>(0);
+    
+     public Set<Order> getOrders() {
+		return orders;
+	}
 
-    public Patient() {
+	public void setOrders(Set<Order> orders) {
+		this.orders = orders;
+	}
+
+	public Patient() {
     }
 
     public Patient(int patientId, String name, int bednr) {
@@ -30,12 +38,12 @@ public class Patient implements Serializable {
         this.bednr = bednr;
     }
 
-    public Patient(int patientId, String name, int bednr, Set<Restriction> restrictions, Set<Ingredient> ingredients) {
+    public Patient(int patientId, String name, int bednr, Set<Restriction> restrictions, Set<Order> orders) {
         this.patientId = patientId;
         this.name = name;
         this.bednr = bednr;
         this.restrictions = restrictions;
-        this.ingredients = ingredients;
+        this.orders=orders;
     }
 
     public int getPatientId() {
@@ -68,13 +76,5 @@ public class Patient implements Serializable {
 
     public void setRestrictions(Set<Restriction> restrictions) {
         this.restrictions = restrictions;
-    }
-
-    public Set<Ingredient> getIngredients() {
-        return this.ingredients;
-    }
-
-    public void setIngredients(Set<Ingredient> ingredients) {
-        this.ingredients = ingredients;
     }
 }

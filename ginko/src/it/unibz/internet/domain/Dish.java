@@ -54,7 +54,6 @@ public class Dish {
             boolean result = this.dishId == tmpdish.dishId;
             result = result && this.name.equals(tmpdish.name);
             result = result && this.price == tmpdish.price;
-            //TODO compare also ingredients and others. 
             return result;
         }
     }

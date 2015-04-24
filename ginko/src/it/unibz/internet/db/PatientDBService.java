@@ -1,6 +1,8 @@
 package it.unibz.internet.db;
 
+import it.unibz.internet.domain.Order;
 import it.unibz.internet.domain.Patient;
+import it.unibz.internet.domain.Restriction;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -8,7 +10,9 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -23,6 +27,9 @@ public class PatientDBService {
 			pstmt.setString(1, pat.getName());
 			pstmt.setInt(2, pat.getBednr());
 			pstmt.execute();
+			
+			//Restrictions abspeichern
+			
 		} catch (SQLException e) {
 			e.printStackTrace();
 			Logger.getLogger(PatientDBService.class.getName()).log(
@@ -53,6 +60,10 @@ public class PatientDBService {
 					.prepareStatement("DELETE FROM patient WHERE patientid=?");
 			pstmt.setInt(1, id);
 			pstmt.execute();
+			
+			//Delete Restrictions 
+			//evtl. orders??? 
+			
 		} catch (SQLException ex) {
 			ex.printStackTrace();
 			Logger.getLogger(PatientDBService.class.getName()).log(
@@ -83,6 +94,8 @@ public class PatientDBService {
 			pstmt.setInt(2, p.getBednr());
 			pstmt.setInt(3, p.getPatientId());
 			pstmt.executeUpdate();
+			
+			//Restrictions updaten
 		} catch (SQLException ex) {
 			ex.printStackTrace();
 			Logger.getLogger(PatientDBService.class.getName()).log(
@@ -116,6 +129,20 @@ public class PatientDBService {
 				pat.setName(rs.getString(2));
 				pat.setBednr(rs.getInt(3));
 			}
+			PreparedStatement pstmt = con.prepareStatement("SELECT * FROM restrictions WHERE patientId=?");
+			pstmt.setInt(1, id);
+			rs=pstmt.executeQuery();
+			Set<Restriction> restrictionset = new HashSet<>(0);
+			while(rs.next())
+			{
+				Restriction rest = new Restriction();
+				rest.setRestrictionId(rs.getInt(1));
+				rest.setName(rs.getString(2));
+			    restrictionset.add(rest);
+			}
+			pat.setRestrictions(restrictionset);
+			
+			
 		} catch (SQLException ex) {
 			ex.printStackTrace();
 			Logger.getLogger(PatientDBService.class.getName()).log(
