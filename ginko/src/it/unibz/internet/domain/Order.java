@@ -13,7 +13,7 @@ public class Order {
 
 	private int orderId;
 
-	private Date orderdate;
+	private Date orderDate;
     private int patientId;
     private List<Dish> dishs = new ArrayList<Dish>();
     
@@ -26,7 +26,7 @@ public class Order {
 
     public Order(int orderId, Date datedelivery, List<Dish> dishs) {
         this.orderId = orderId;
-        this.orderdate = datedelivery;
+        this.orderDate = datedelivery;
         this.dishs = dishs;
     }
 
@@ -37,12 +37,12 @@ public class Order {
     public void setOrderId(int orderId) {
         this.orderId = orderId;
     }
-    public Date getOrderdate() {
-		return orderdate;
+    public Date getOrderDate() {
+		return orderDate;
 	}
 
-	public void setOrderdate(Date orderdate) {
-		this.orderdate = orderdate;
+	public void setOrderDate(Date orderdate) {
+		this.orderDate = orderdate;
 	}
 
 	public int getPatientId() {

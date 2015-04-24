@@ -29,7 +29,7 @@ public class OrderDAO {
 			while (rs.next()) {
 				Order order = new Order();
 				order.setOrderId(rs.getInt(1));
-				order.setOrderdate(rs.getDate(2));
+				order.setOrderDate(rs.getDate(2));
 				order.setPatientId(rs.getInt(3));
 				
 				PreparedStatement pstmt2 = con.prepareStatement("SELECT * FROM orderdetails WHERE orderid=?");

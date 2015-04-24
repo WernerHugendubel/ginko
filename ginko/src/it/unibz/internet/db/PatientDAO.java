@@ -126,7 +126,7 @@ public class PatientDAO {
 				pat.setName(rs.getString(2));
 				pat.setBednr(rs.getInt(3));
 			}
-			PreparedStatement pstmt = con.prepareStatement("SELECT restrictionid FROM patientrestriction WHERE patientid=?");
+			PreparedStatement pstmt = con.prepareStatement("SELECT restrictionid FROM patienthasrestriction WHERE patientid=?");
 			pstmt.setInt(1, id);
 			rs=pstmt.executeQuery();
 			List<Restriction> restrictionset = new ArrayList<>();
@@ -175,7 +175,7 @@ public class PatientDAO {
 				pat.setName(rs.getString(2));
 				pat.setBednr(rs.getInt(3));
 				
-				PreparedStatement pstmt = con.prepareStatement("SELECT restrictionid FROM patientrestriction WHERE patientid=?");
+				PreparedStatement pstmt = con.prepareStatement("SELECT restrictionid FROM patienthasrestriction WHERE patientid=?");
 				pstmt.setInt(1, pat.getPatientId());
 				ResultSet resultSetRestrictions = pstmt.executeQuery();
 				List<Restriction> setRestriction = new ArrayList<>();
