@@ -18,7 +18,6 @@ public class Order implements Serializable {
 	private static final long serialVersionUID = 2163679588426113942L;
 
 	private int orderId;
-
 	private Date orderDate;
     private int patientId;
     private List<Dish> dishs = new ArrayList<Dish>();

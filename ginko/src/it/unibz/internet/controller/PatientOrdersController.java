@@ -5,7 +5,6 @@ import it.unibz.internet.db.OrderDAO;
 import it.unibz.internet.db.PatientDAO;
 import it.unibz.internet.domain.Order;
 import it.unibz.internet.domain.Patient;
-import it.unibz.internet.domain.Dish;
 
 import java.io.IOException;
 import java.util.List;
@@ -22,20 +21,18 @@ import javax.servlet.http.HttpServletResponse;
  * Servlet implementation class PatientController
  */
 @WebServlet("/patientOrders")
-public class OrderController extends HttpServlet {
+public class PatientOrdersController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	private PatientDAO patientDAO;
 	private OrderDAO orderDAO;
-	private DishDAO dishDAO;
 	/**
 	 * @see HttpServlet#HttpServlet()
 	 */
-	public OrderController() {
+	public PatientOrdersController() {
 		super();
 		this.patientDAO = new PatientDAO();
 		this.orderDAO = new OrderDAO();
-		this.dishDAO= new DishDAO();
 	}
 
 	protected void doGet(HttpServletRequest request,
