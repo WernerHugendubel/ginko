@@ -14,3 +14,5 @@ WITH (
 );
 ALTER TABLE patient
   OWNER TO postgres;
+
+  
