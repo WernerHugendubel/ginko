@@ -1,6 +1,5 @@
 package it.unibz.internet.controller;
 
-import it.unibz.internet.db.DishDAO;
 import it.unibz.internet.db.OrderDAO;
 import it.unibz.internet.db.PatientDAO;
 import it.unibz.internet.domain.Order;
