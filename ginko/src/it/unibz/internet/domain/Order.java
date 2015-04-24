@@ -1,5 +1,6 @@
 package it.unibz.internet.domain;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -9,7 +10,12 @@ import java.util.List;
  *
  * @author Werner Frei <freiwe@gmail.com>
  */
-public class Order {
+public class Order implements Serializable {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 2163679588426113942L;
 
 	private int orderId;
 

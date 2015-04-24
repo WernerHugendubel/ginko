@@ -1,5 +1,6 @@
 package it.unibz.internet.domain;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -8,9 +9,13 @@ import java.util.List;
  *
  * @author Werner Frei <freiwe@gmail.com>
  */
-public class OrderDetail {
+public class OrderDetail implements Serializable{
 
-    private int orderId;
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -4062255370202018034L;
+	private int orderId;
     private List<Dish> dishs = new ArrayList<Dish>();
 
     public OrderDetail() {

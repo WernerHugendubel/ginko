@@ -1,14 +1,20 @@
 package it.unibz.internet.domain;
 
+import java.io.Serializable;
+
 
 /**
  * Domain Object dish.
  *
  * @author Werner Frei <freiwe@gmail.com>
  */
-public class Dish {
+public class Dish implements Serializable{
 
-    private int dishId;
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 5597169245834370573L;
+	private int dishId;
     private String name;
     private double price;
 

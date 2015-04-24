@@ -22,9 +22,10 @@
 	<hr>
 	<h3>Orders</h3>
 	<c:forEach items="${requestScope.orders}" var="order">
-	    ${order.orderId} - ${order.orderDate}<br>
+	    ${order.orderId} - ${order.orderDate} 	<a href='${pageContext.request.contextPath}/orderModify?orderId=${order.orderId}'>change order...</a> / <a href='${pageContext.request.contextPath}/rateDishes?orderId=${order.orderId}'>rate dishes...</a><br>
 	</c:forEach>
 	<hr>
+	<a href='${pageContext.request.contextPath}/orderAdd?patientId=${patient.patientId}'>add new order...</a>
 	<hr>
 </body>
 </html>

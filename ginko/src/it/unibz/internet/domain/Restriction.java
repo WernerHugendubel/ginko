@@ -1,5 +1,6 @@
 package it.unibz.internet.domain;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -8,9 +9,13 @@ import java.util.List;
  *
  * @author Werner Frei <freiwe@gmail.com>
  */
-public class Restriction  {
+public class Restriction implements Serializable {
 
-    private int restrictionId;
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 6313989383632493757L;
+	private int restrictionId;
     private String name;
     private List<Dish> dishs = new ArrayList<>();
 
