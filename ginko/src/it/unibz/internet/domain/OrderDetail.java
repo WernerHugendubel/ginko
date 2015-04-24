@@ -1,19 +1,17 @@
 package it.unibz.internet.domain;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
- * Domain object Mealorder. A single mealorder is identified by a orderId and
- * has as attributes the patient who is referred to, the employee who inserted
- * the order, the deliveryNum identifies the delivery the order is part from
+ * Domain object OrderDetail.
  *
  * @author Werner Frei <freiwe@gmail.com>
  */
 public class OrderDetail {
 
     private int orderId;
-    private Set<Dish> dishs = new HashSet<Dish>(0);
+    private List<Dish> dishs = new ArrayList<Dish>();
 
     public OrderDetail() {
     }
@@ -22,7 +20,7 @@ public class OrderDetail {
         this.orderId = orderId;
     }
 
-    public OrderDetail(int orderId, Patient patient, int deliveryNumber, Set<Dish> dishs) {
+    public OrderDetail(int orderId, Patient patient, int deliveryNumber, List<Dish> dishs) {
         this.orderId = orderId;
         this.dishs = dishs;
     }
@@ -35,11 +33,11 @@ public class OrderDetail {
         this.orderId = orderId;
     }
 
-    public Set<Dish> getDishs() {
+    public List<Dish> getDishs() {
         return this.dishs;
     }
 
-    public void setDishs(Set<Dish> dishs) {
+    public void setDishs(List<Dish> dishs) {
         this.dishs = dishs;
     }
 }

@@ -16,9 +16,10 @@
 	<c:forEach items="${patientlist}" var="patient">
     ${patient.patientId}, ${patient.name}, ${patient.bednr}, <a
 			href='${pageContext.request.contextPath}/patientUpdate?patientId=${patient.patientId}'>update</a> /  <a
-			href='${pageContext.request.contextPath}/addOrder'>order... </a>
+			href='${pageContext.request.contextPath}/patientOrders?patientId=${patient.patientId}'>order... </a>
 		<br>
 	</c:forEach>
+	<hr>
 	<a href='${pageContext.request.contextPath}/patientAdd'>Add new
 		patient</a>
 

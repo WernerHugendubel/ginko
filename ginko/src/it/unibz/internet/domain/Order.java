@@ -1,19 +1,21 @@
 package it.unibz.internet.domain;
 
+import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.List;
 
 /**
- * Domain object Delivery 
+ * Domain object Order 
  *
  * @author Werner Frei <freiwe@gmail.com>
  */
 public class Order {
 
 	private int orderId;
-    private Date orderdate;
-    private Set<Dish> dishs = new HashSet<Dish>(0);
+
+	private Date orderdate;
+    private int patientId;
+    private List<Dish> dishs = new ArrayList<Dish>();
     
     public Order() {
     }
@@ -22,7 +24,7 @@ public class Order {
         this.orderId = deliveryId;
     }
 
-    public Order(int orderId, Date datedelivery, Set<Dish> dishs) {
+    public Order(int orderId, Date datedelivery, List<Dish> dishs) {
         this.orderId = orderId;
         this.orderdate = datedelivery;
         this.dishs = dishs;
@@ -35,20 +37,27 @@ public class Order {
     public void setOrderId(int orderId) {
         this.orderId = orderId;
     }
+    public Date getOrderdate() {
+		return orderdate;
+	}
 
-    public Date getDatedelivery() {
-        return this.orderdate;
-    }
+	public void setOrderdate(Date orderdate) {
+		this.orderdate = orderdate;
+	}
 
-    public void setDatedelivery(Date datedelivery) {
-        this.orderdate = datedelivery;
-    }
+	public int getPatientId() {
+		return patientId;
+	}
 
-    public Set<Dish> getDishs() {
+	public void setPatientId(int patientId) {
+		this.patientId = patientId;
+	}
+
+    public List<Dish> getDishs() {
         return this.dishs;
     }
 
-    public void setDishs(Set<Dish> dishs) {
+    public void setDishs(List<Dish> dishs) {
         this.dishs = dishs;
     }
 }

@@ -1,7 +1,7 @@
 package it.unibz.internet.controller;
 
 
-import it.unibz.internet.db.PatientDBService;
+import it.unibz.internet.db.PatientDAO;
 import it.unibz.internet.domain.Patient;
 
 import java.io.IOException;
@@ -18,9 +18,9 @@ import javax.servlet.http.HttpServletResponse;
 public class PatientListController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
-	private PatientDBService patientDBService;
+	private PatientDAO patientDAO;
 	public PatientListController(){
-		this.patientDBService=new PatientDBService();
+		this.patientDAO=new PatientDAO();
 	}
 	protected void doGet(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
@@ -28,7 +28,7 @@ public class PatientListController extends HttpServlet {
 		String applicationContextPath = request.getContextPath();
 
 		if (request.getRequestURI().equals(applicationContextPath + "/")) {
-			List<Patient> patientlist = patientDBService.getPatients();
+			List<Patient> patientlist = patientDAO.getPatients();
 			RequestDispatcher dispatcher = request
 					.getRequestDispatcher("/WEB-INF/jsp/patientList.jsp");
 			request.getSession().setAttribute("patientlist", patientlist);

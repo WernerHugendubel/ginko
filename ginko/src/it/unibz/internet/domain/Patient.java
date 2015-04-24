@@ -1,7 +1,9 @@
 package it.unibz.internet.domain;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -18,7 +20,7 @@ public class Patient implements Serializable {
 	private int patientId;
     private String name;
     private int bednr;
-    private Set<Restriction> restrictions = new HashSet<Restriction>(0);
+    private List<Restriction> restrictions = new ArrayList<Restriction>();
     private Set<Order> orders = new HashSet<Order>(0);
     
      public Set<Order> getOrders() {
@@ -38,7 +40,7 @@ public class Patient implements Serializable {
         this.bednr = bednr;
     }
 
-    public Patient(int patientId, String name, int bednr, Set<Restriction> restrictions, Set<Order> orders) {
+    public Patient(int patientId, String name, int bednr, List<Restriction> restrictions, Set<Order> orders) {
         this.patientId = patientId;
         this.name = name;
         this.bednr = bednr;
@@ -70,11 +72,11 @@ public class Patient implements Serializable {
         this.bednr = bednr;
     }
 
-    public Set<Restriction> getRestrictions() {
+    public List<Restriction> getRestrictions() {
         return this.restrictions;
     }
 
-    public void setRestrictions(Set<Restriction> restrictions) {
+    public void setRestrictions(List<Restriction> restrictions) {
         this.restrictions = restrictions;
     }
 }

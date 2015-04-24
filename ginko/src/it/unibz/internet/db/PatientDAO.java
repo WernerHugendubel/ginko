@@ -1,6 +1,5 @@
 package it.unibz.internet.db;
 
-import it.unibz.internet.domain.Order;
 import it.unibz.internet.domain.Patient;
 import it.unibz.internet.domain.Restriction;
 
@@ -10,13 +9,11 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-public class PatientDBService {
+public class PatientDAO {
 
 	public void addNew(Patient pat) {
 		Connection con = DatabaseConnectionFactory.createConnection();
@@ -32,7 +29,7 @@ public class PatientDBService {
 			
 		} catch (SQLException e) {
 			e.printStackTrace();
-			Logger.getLogger(PatientDBService.class.getName()).log(
+			Logger.getLogger(PatientDAO.class.getName()).log(
 					Level.SEVERE, null, e);
 		} finally {
 
@@ -45,7 +42,7 @@ public class PatientDBService {
 				}
 			} catch (SQLException ex) {
 				ex.printStackTrace();
-				Logger.getLogger(PatientDBService.class.getName()).log(
+				Logger.getLogger(PatientDAO.class.getName()).log(
 						Level.SEVERE, null, ex);
 			}
 		}
@@ -66,7 +63,7 @@ public class PatientDBService {
 			
 		} catch (SQLException ex) {
 			ex.printStackTrace();
-			Logger.getLogger(PatientDBService.class.getName()).log(
+			Logger.getLogger(PatientDAO.class.getName()).log(
 					Level.SEVERE, null, ex);
 		} finally {
 			try {
@@ -78,7 +75,7 @@ public class PatientDBService {
 				}
 			} catch (SQLException ex) {
 				ex.printStackTrace();
-				Logger.getLogger(PatientDBService.class.getName()).log(
+				Logger.getLogger(PatientDAO.class.getName()).log(
 						Level.SEVERE, null, ex);
 			}
 		}
@@ -98,7 +95,7 @@ public class PatientDBService {
 			//Restrictions updaten
 		} catch (SQLException ex) {
 			ex.printStackTrace();
-			Logger.getLogger(PatientDBService.class.getName()).log(
+			Logger.getLogger(PatientDAO.class.getName()).log(
 					Level.SEVERE, null, ex);
 		} finally {
 			try {
@@ -110,7 +107,7 @@ public class PatientDBService {
 				}
 			} catch (SQLException ex) {
 				ex.printStackTrace();
-				Logger.getLogger(PatientDBService.class.getName()).log(
+				Logger.getLogger(PatientDAO.class.getName()).log(
 						Level.SEVERE, null, ex);
 			}
 		}
@@ -122,30 +119,28 @@ public class PatientDBService {
 		Statement stmt = null;
 		try {
 			stmt = con.createStatement();
-			ResultSet rs = stmt.executeQuery("SELECT * FROM patient WHERE patientId=" + id);
+			ResultSet rs = stmt.executeQuery("SELECT * FROM patient WHERE patientid=" + id);
 			if (rs.next()) {
 				pat = new Patient();
 				pat.setPatientId(rs.getInt(1));
 				pat.setName(rs.getString(2));
 				pat.setBednr(rs.getInt(3));
 			}
-			PreparedStatement pstmt = con.prepareStatement("SELECT * FROM restrictions WHERE patientId=?");
+			PreparedStatement pstmt = con.prepareStatement("SELECT restrictionid FROM patientrestriction WHERE patientid=?");
 			pstmt.setInt(1, id);
 			rs=pstmt.executeQuery();
-			Set<Restriction> restrictionset = new HashSet<>(0);
+			List<Restriction> restrictionset = new ArrayList<>();
+			RestrictionDAO restDAO = new RestrictionDAO();
 			while(rs.next())
 			{
-				Restriction rest = new Restriction();
-				rest.setRestrictionId(rs.getInt(1));
-				rest.setName(rs.getString(2));
+				int restrictionid = rs.getInt(1);
+				Restriction rest =restDAO.getRestriction(restrictionid);
 			    restrictionset.add(rest);
 			}
 			pat.setRestrictions(restrictionset);
-			
-			
 		} catch (SQLException ex) {
 			ex.printStackTrace();
-			Logger.getLogger(PatientDBService.class.getName()).log(
+			Logger.getLogger(PatientDAO.class.getName()).log(
 					Level.SEVERE, null, ex);
 		} finally {
 			try {
@@ -157,7 +152,7 @@ public class PatientDBService {
 				}
 			} catch (SQLException ex) {
 				ex.printStackTrace();
-				Logger.getLogger(PatientDBService.class.getName()).log(
+				Logger.getLogger(PatientDAO.class.getName()).log(
 						Level.SEVERE, null, ex);
 			}
 		}
@@ -169,6 +164,8 @@ public class PatientDBService {
 		List<Patient> list = new ArrayList<>();
 		Connection con = DatabaseConnectionFactory.createConnection();
 		Statement stmt = null;
+		RestrictionDAO restrictionDAO = new RestrictionDAO();
+
 		try {
 			stmt = con.createStatement();
 			ResultSet rs = stmt.executeQuery("SELECT * FROM patient ORDER BY patientId");
@@ -177,11 +174,22 @@ public class PatientDBService {
 				pat.setPatientId(rs.getInt(1));
 				pat.setName(rs.getString(2));
 				pat.setBednr(rs.getInt(3));
+				
+				PreparedStatement pstmt = con.prepareStatement("SELECT restrictionid FROM patientrestriction WHERE patientid=?");
+				pstmt.setInt(1, pat.getPatientId());
+				ResultSet resultSetRestrictions = pstmt.executeQuery();
+				List<Restriction> setRestriction = new ArrayList<>();
+				while(resultSetRestrictions.next())
+				{
+					Restriction restriction = restrictionDAO.getRestriction(resultSetRestrictions.getInt(1));
+					setRestriction.add(restriction);
+				}
+				pat.setRestrictions(setRestriction);
 				list.add(pat);
 			}
 		} catch (SQLException ex) {
 			ex.printStackTrace();
-			Logger.getLogger(PatientDBService.class.getName()).log(
+			Logger.getLogger(PatientDAO.class.getName()).log(
 					Level.SEVERE, null, ex);
 		} finally {
 			try {
@@ -193,7 +201,7 @@ public class PatientDBService {
 				}
 			} catch (SQLException ex) {
 				ex.printStackTrace();
-				Logger.getLogger(PatientDBService.class.getName()).log(
+				Logger.getLogger(PatientDAO.class.getName()).log(
 						Level.SEVERE, null, ex);
 			}
 		}

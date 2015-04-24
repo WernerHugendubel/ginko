@@ -1,7 +1,7 @@
 package it.unibz.internet.domain;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Domain object Restriction.
@@ -12,7 +12,7 @@ public class Restriction  {
 
     private int restrictionId;
     private String name;
-    private Set<Dish> dishs = new HashSet<Dish>(0);
+    private List<Dish> dishs = new ArrayList<>();
 
     public Restriction() {
     }
@@ -22,7 +22,7 @@ public class Restriction  {
         this.name = name;
     }
 
-    public Restriction(int restrictionId, String name, Set<Dish> dishs) {
+    public Restriction(int restrictionId, String name, List<Dish> dishs) {
         this.restrictionId = restrictionId;
         this.name = name;
         this.dishs = dishs;
@@ -44,11 +44,11 @@ public class Restriction  {
         this.name = name;
     }
 
-    public Set<Dish> getDishs() {
+    public List<Dish> getDishs() {
         return this.dishs;
     }
 
-    public void setDishs(Set<Dish> dishs) {
+    public void setDishs(List<Dish> dishs) {
         this.dishs = dishs;
     }
 }

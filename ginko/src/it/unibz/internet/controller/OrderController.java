@@ -1,9 +1,14 @@
 package it.unibz.internet.controller;
 
-import it.unibz.internet.db.PatientDBService;
+import it.unibz.internet.db.DishDAO;
+import it.unibz.internet.db.OrderDAO;
+import it.unibz.internet.db.PatientDAO;
+import it.unibz.internet.domain.Order;
 import it.unibz.internet.domain.Patient;
+import it.unibz.internet.domain.Dish;
 
 import java.io.IOException;
+import java.util.List;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -12,6 +17,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+
 /**
  * Servlet implementation class PatientController
  */
@@ -19,14 +25,17 @@ import javax.servlet.http.HttpServletResponse;
 public class OrderController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
-	private PatientDBService patientDBService;
-
+	private PatientDAO patientDAO;
+	private OrderDAO orderDAO;
+	private DishDAO dishDAO;
 	/**
 	 * @see HttpServlet#HttpServlet()
 	 */
 	public OrderController() {
 		super();
-		this.patientDBService = new PatientDBService();
+		this.patientDAO = new PatientDAO();
+		this.orderDAO = new OrderDAO();
+		this.dishDAO= new DishDAO();
 	}
 
 	protected void doGet(HttpServletRequest request,
@@ -34,9 +43,10 @@ public class OrderController extends HttpServlet {
 
 		//get patientid from request
 		int patientId = Integer.parseInt(request.getParameter("patientId"));
-		Patient pat = this.patientDBService.getPatient(patientId);
-
+		Patient pat = this.patientDAO.getPatient(patientId);
 		request.setAttribute("patient", pat);
+		List<Order> orders = this.orderDAO.getOrderList(patientId);
+		request.setAttribute("orders", orders);
 
 		RequestDispatcher dispatcher = request
 				.getRequestDispatcher("/WEB-INF/jsp/patientOrders.jsp");
