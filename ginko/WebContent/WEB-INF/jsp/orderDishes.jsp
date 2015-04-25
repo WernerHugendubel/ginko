@@ -17,12 +17,12 @@
 	<hr>
 	<h4>Seleted dishes:</h4>
 	<c:forEach items="${order.dishs}" var="dish">
-	    ${dish.dishId} - ${dish.name}: <a href='${pageContext.request.contextPath}/selectDishe?orderId=${order.orderId}&dishId=${dish.dishId}&action=addDish'>remove...</a><br>
+	    ${dish.dishId} - ${dish.name}: <a href='${pageContext.request.contextPath}/orderDishes?orderId=${order.orderId}&dishId=${dish.dishId}&action=removeDish'>remove...</a><br>
 	</c:forEach>
 	<hr>
 	<h4>Available dishes: TODO: no restriction checked; remove already selected</h4>
 	<c:forEach items="${availabledishes}" var="dish">
-	    ${dish.dishId} - ${dish.name}: <a href='${pageContext.request.contextPath}/selectDishe?orderId=${order.orderId}&dishId=${dish.dishId}&action=addDish'>select...</a><br>
+	    ${dish.dishId} - ${dish.name}: <a href='${pageContext.request.contextPath}/orderDishes?orderId=${order.orderId}&dishId=${dish.dishId}&action=addDish'>select...</a><br>
 	</c:forEach>
 	
 	<hr>

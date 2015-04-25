@@ -41,16 +41,39 @@ public class OrderDishesController extends HttpServlet {
 	protected void doGet(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
 
+		//get action from request
+		String action = request.getParameter("action");
 		//get orderid from request
 		int orderId = Integer.parseInt(request.getParameter("orderId"));
 		Order o = this.orderDAO.getOrder(orderId);
 		request.setAttribute("order", o);
-		
 		Patient pat = this.patientDAO.getPatient(o.getPatientId());
 		request.setAttribute("patient",  pat);
+
+		if (action==null){
+			//do nothing
+		
+		}else if (action.equals("addDish"))
+		{
+			//insert dish into orderdetails
+			int dishId=Integer.parseInt(request.getParameter("dishId"));
+			Dish d = this.dishDAO.getDish(dishId);
+			List<Dish> l = o.getDishs();
+			l.add(d); //TODO: check if restriction
+		    o.setDishs(l);
+		    this.orderDAO.writeOrderDetails(o);
+		}else if (action.equals("removeDish")){
+			//remove dish from orderdetails
+			int dishId=Integer.parseInt(request.getParameter("dishId"));
+			Dish d = this.dishDAO.getDish(dishId);
+			List<Dish> l = o.getDishs();
+			l.remove(d); //TODO: check if restriction
+		    o.setDishs(l);
+		    this.orderDAO.writeOrderDetails(o);
+
+		}
 		List<Dish> availdishes = this.dishDAO.getDishs();
 		request.setAttribute("availabledishes", availdishes);
-
 		RequestDispatcher dispatcher = request
 				.getRequestDispatcher("/WEB-INF/jsp/orderDishes.jsp");
 		dispatcher.forward(request, response);

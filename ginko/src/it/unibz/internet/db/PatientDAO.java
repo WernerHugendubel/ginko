@@ -116,19 +116,21 @@ public class PatientDAO {
 	public Patient getPatient(int id) {
 		Patient pat = null;
 		Connection con = DatabaseConnectionFactory.createConnection();
-		Statement stmt = null;
+		PreparedStatement pstmt = null;
+		PreparedStatement pstmt2 = null;
 		try {
-			stmt = con.createStatement();
-			ResultSet rs = stmt.executeQuery("SELECT * FROM patient WHERE patientid=" + id);
+			pstmt = con.prepareStatement("SELECT * FROM patient WHERE patientid=?");
+			pstmt.setInt(1, id);
+			ResultSet rs = pstmt.executeQuery();
 			if (rs.next()) {
 				pat = new Patient();
 				pat.setPatientId(rs.getInt(1));
 				pat.setName(rs.getString(2));
 				pat.setBednr(rs.getInt(3));
 			}
-			PreparedStatement pstmt = con.prepareStatement("SELECT restrictionid FROM patienthasrestriction WHERE patientid=?");
-			pstmt.setInt(1, id);
-			rs=pstmt.executeQuery();
+			pstmt2 = con.prepareStatement("SELECT restrictionid FROM patienthasrestriction WHERE patientid=?");
+			pstmt2.setInt(1, id);
+			rs=pstmt2.executeQuery();
 			List<Restriction> restrictionset = new ArrayList<>();
 			RestrictionDAO restDAO = new RestrictionDAO();
 			while(rs.next())
@@ -144,8 +146,11 @@ public class PatientDAO {
 					Level.SEVERE, null, ex);
 		} finally {
 			try {
-				if (stmt != null) {
-					stmt.close();
+				if (pstmt != null) {
+					pstmt.close();
+				}
+				if (pstmt2 != null) {
+					pstmt2.close();
 				}
 				if (con != null) {
 					con.close();
@@ -165,7 +170,7 @@ public class PatientDAO {
 		Connection con = DatabaseConnectionFactory.createConnection();
 		Statement stmt = null;
 		RestrictionDAO restrictionDAO = new RestrictionDAO();
-
+        PreparedStatement pstmt = null;
 		try {
 			stmt = con.createStatement();
 			ResultSet rs = stmt.executeQuery("SELECT * FROM patient ORDER BY patientId");
@@ -175,7 +180,7 @@ public class PatientDAO {
 				pat.setName(rs.getString(2));
 				pat.setBednr(rs.getInt(3));
 				
-				PreparedStatement pstmt = con.prepareStatement("SELECT restrictionid FROM patienthasrestriction WHERE patientid=?");
+				pstmt = con.prepareStatement("SELECT restrictionid FROM patienthasrestriction WHERE patientid=?");
 				pstmt.setInt(1, pat.getPatientId());
 				ResultSet resultSetRestrictions = pstmt.executeQuery();
 				List<Restriction> setRestriction = new ArrayList<>();
@@ -195,6 +200,9 @@ public class PatientDAO {
 			try {
 				if (stmt != null) {
 					stmt.close();
+				}
+				if (pstmt != null) {
+					pstmt.close();
 				}
 				if (con != null) {
 					con.close();

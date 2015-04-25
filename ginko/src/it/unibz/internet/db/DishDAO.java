@@ -17,10 +17,9 @@ public class DishDAO {
 	public Dish getDish(int id) {
 		Dish dish = null;
 		Connection con = DatabaseConnectionFactory.createConnection();
-		Statement stmt = null;
+		PreparedStatement pstmt = null;
 		try {
-			stmt = con.createStatement();
-			PreparedStatement pstmt = con.prepareStatement("SELECT * FROM dish WHERE dishid=?");
+			pstmt = con.prepareStatement("SELECT * FROM dish WHERE dishid=?");
 			pstmt.setInt(1, id);
 			ResultSet rs= pstmt.executeQuery();
 			if (rs.next()) {
@@ -34,8 +33,8 @@ public class DishDAO {
 					Level.SEVERE, null, ex);
 		} finally {
 			try {
-				if (stmt != null) {
-					stmt.close();
+				if (pstmt != null) {
+					pstmt.close();
 				}
 				if (con != null) {
 					con.close();
@@ -53,10 +52,10 @@ public class DishDAO {
 	public List<Dish> getDishs() {
 		List<Dish> dishList = new ArrayList<>();
 		Connection con = DatabaseConnectionFactory.createConnection();
-		Statement stmt = null;
+		PreparedStatement pstmt = null;
 		try {
-			stmt = con.createStatement();
-			ResultSet rs = stmt.executeQuery("SELECT * FROM dish ORDER BY dishid");
+			pstmt = con.prepareStatement("SELECT * FROM dish ORDER BY dishid");
+			ResultSet rs = pstmt.executeQuery();
 			while (rs.next()) {
 				Dish dish = new Dish();
 				dish.setDishId(rs.getInt(1));
@@ -69,8 +68,8 @@ public class DishDAO {
 					Level.SEVERE, null, ex);
 		} finally {
 			try {
-				if (stmt != null) {
-					stmt.close();
+				if (pstmt != null) {
+					pstmt.close();
 				}
 				if (con != null) {
 					con.close();

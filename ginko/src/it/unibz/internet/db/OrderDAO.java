@@ -7,7 +7,6 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
@@ -108,5 +107,40 @@ public class OrderDAO {
 			}
 		}
 		return orderList;
+	}
+	
+	public boolean writeOrderDetails(Order o){
+		Connection con = DatabaseConnectionFactory.createConnection();
+		PreparedStatement pstmt=null;
+		try {
+			pstmt = con.prepareStatement("DELETE FROM orderdetails WHERE orderId=?");
+			pstmt.setInt(1, o.getOrderId());
+			pstmt.execute();
+			for(int i=0;i<o.getDishs().size();i++){
+				Dish dish = o.getDishs().get(i);
+				pstmt = con.prepareStatement("INSERT INTO orderdetails (orderId, dishId) VALUES (?,?)");
+				pstmt.setInt(1, o.getOrderId());
+				pstmt.setInt(2, dish.getDishId());
+				pstmt.execute();
+			}
+		} catch (SQLException ex) {
+			ex.printStackTrace();
+			Logger.getLogger(OrderDAO.class.getName()).log(
+					Level.SEVERE, null, ex);
+		} finally {
+			try {
+				if (pstmt != null) {
+					pstmt.close();
+				}
+				if (con != null) {
+					con.close();
+				}
+			} catch (SQLException ex) {
+				ex.printStackTrace();
+				Logger.getLogger(OrderDAO.class.getName()).log(
+						Level.SEVERE, null, ex);
+			}
+		}
+		return true;
 	}
 }
