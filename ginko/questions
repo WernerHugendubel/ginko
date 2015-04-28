@@ -1,7 +1,10 @@
-How to pass patientid from home.jsp to addOrder page? 
+1. Business logic in Controller Class, example: OrderDishesController has Bl. 
+Is this Ok or schould I insert another Layer Business logic as central class for BL? 
+
+2. Is it necessary to introduce interfaces for loose coupling UI to BL and BL to DAO? 
+
+- Form rating - single forms for every dish? How can we aggregate all ratings for 
+an order in a single form and pass different dishid/rating tuples?
 
 
-is it OK if the List<Patient> object is created from the MainController and passed to home.jsp?
-Or is it better to have a separate controller for each jsp page
-If MainController is used then it will become very large
-
+3. How can I test a controller? 
