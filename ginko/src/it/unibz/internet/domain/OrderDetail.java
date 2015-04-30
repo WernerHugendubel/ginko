@@ -18,6 +18,20 @@ public class OrderDetail implements Serializable{
 
     
     /**
+	 * @return the patient
+	 */
+	public Patient getPatient() {
+		return patient;
+	}
+
+	/**
+	 * @param patient the patient to set
+	 */
+	public void setPatient(Patient patient) {
+		this.patient = patient;
+	}
+
+	/**
      * Constructor
      */
     public OrderDetail() {
