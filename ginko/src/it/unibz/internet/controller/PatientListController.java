@@ -14,11 +14,19 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+/**
+ * Controller for Patient List view patientList.jsp
+ * @author Werner Frei <freiwe@gmail.com>
+ *
+ */
 @WebServlet(urlPatterns = { "/"})
 public class PatientListController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	private MealReservationService mealReservationService;
+	/**
+	 * @see HttpServlet#HttpServlet()
+	 */
 	public PatientListController(){
 		this.mealReservationService=new MealReservationService();
 	}

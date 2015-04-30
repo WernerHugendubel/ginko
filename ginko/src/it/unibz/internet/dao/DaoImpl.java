@@ -14,16 +14,23 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+/**
+ * Implementation of Dao - direct access to Database, 
+ * Connection is retrieved from DatabaseConnectionFactory
+ * Not all methods are implemented
+ * 
+ * @author Werner Frei <freiwe@gmail.com>
+ */
 public class DaoImpl implements Dao {
 
 	@Override
-	public Dish getDish(int id) {
+	public Dish getDish(int dishId) {
 		Dish dish = null;
 		Connection con = DatabaseConnectionFactory.createConnection();
 		PreparedStatement pstmt = null;
 		try {
 			pstmt = con.prepareStatement("SELECT * FROM dish WHERE dishid=?");
-			pstmt.setInt(1, id);
+			pstmt.setInt(1, dishId);
 			ResultSet rs= pstmt.executeQuery();
 			if (rs.next()) {
 				dish = new Dish();
@@ -519,5 +526,10 @@ public class DaoImpl implements Dao {
 		return restrictionList;
 	}
 
-	
+
+	@Override
+	public void insertOrder(Order o) {
+		// TODO Auto-generated method stub
+		throw new RuntimeException("not yet implemented");
+	}
 }

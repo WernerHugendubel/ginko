@@ -11,10 +11,15 @@ import java.sql.SQLException;
  */
 public class DatabaseConnectionFactory {
 
+	//TODO: move in properties file
 	private static String dbURL = "jdbc:postgresql://localhost/webmeal";
 	private static String dbUser = "postgres";
 	private static String dbPassword = "postgres";
 
+	/**
+	 * Create a new Connection
+	 * @return a new connection
+	 */
 	public static Connection createConnection() {
 		Connection con = null;
 		try {
