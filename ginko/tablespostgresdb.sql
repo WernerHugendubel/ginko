@@ -21,7 +21,7 @@ ALTER TABLE patient
 
 CREATE TABLE restriction
 (
-  restrictionid integer NOT NULL DEFAULT nextval('restrictions_restrictionid_seq'::regclass),
+  restrictionid SERIAL NOT NULL,
   name character varying(100),
   CONSTRAINT restrictionspk PRIMARY KEY (restrictionid)
 )

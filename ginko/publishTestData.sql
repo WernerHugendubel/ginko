@@ -1,9 +1,9 @@
 TRUNCATE TABLE patient CASCADE;
-INSERT INTO patient (patientid, name, bednr) VALUES (1, 'Paolo Rossi', 101);
+INSERT INTO patient (patientid, name, bednr) VALUES (1, 'Yanis Varoufakis', 101);
 INSERT INTO patient (patientid, name, bednr) VALUES (2, 'Barrack Obama', 102);
 INSERT INTO patient (patientid, name, bednr) VALUES (3, 'Angela Merkel', 104);
-INSERT INTO patient (patientid, name, bednr) VALUES (4, 'Mario Draghi', 203);
-INSERT INTO patient (patientid, name, bednr) VALUES (5, 'Enrico Letta', 202);
+INSERT INTO patient (patientid, name, bednr) VALUES (4, 'Vladimir Putin', 203);
+INSERT INTO patient (patientid, name, bednr) VALUES (5, 'Matteo Renzi', 202);
 
 TRUNCATE TABLE dish CASCADE;
 INSERT INTO dish (dishid, name, price) VALUES (2, 'Lasagne', 2.20);
@@ -31,8 +31,9 @@ INSERT INTO patienthasrestriction(restrictionid, patientid) VALUES (2, 3);
 INSERT INTO patienthasrestriction(restrictionid, patientid) VALUES (2, 4);
         
 TRUNCATE TABLE orders CASCADE;
-INSERT INTO orders (orderid, orderdate, patientid) VALUES (1, '2013-05-29', 2);
-INSERT INTO orders (orderid, orderdate, patientid) VALUES (2, '2013-05-29', 1);
+INSERT INTO orders (orderid, orderdate, patientid) VALUES (1, '2015-04-29', 2);
+INSERT INTO orders (orderid, orderdate, patientid) VALUES (2, '2015-04-29', 1);
+INSERT INTO orders (orderid, orderdate, patientid) VALUES (3, '2015-04-30', 1);
 
 TRUNCATE TABLE orderdetails CASCADE;
 INSERT INTO orderdetails (orderid, dishid, rating) VALUES (1, 1, 1);

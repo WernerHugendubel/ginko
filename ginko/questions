@@ -1,10 +1,15 @@
 1. Business logic in Controller Class, example: OrderDishesController has Bl. 
-Is this Ok or schould I insert another Layer Business logic as central class for BL? 
 
-2. Is it necessary to introduce interfaces for loose coupling UI to BL and BL to DAO? 
+Is this Ok or should I insert another Layer Business logic as central class for BL? 
 
-- Form rating - single forms for every dish? How can we aggregate all ratings for 
+2. Is it necessary to introduce interfaces like in Bank-Account example
+
+3. Form rating - single forms for every dish? How can we aggregate all ratings for 
 an order in a single form and pass different dishid/rating tuples?
 
-
 3. How can I test a controller? 
+
+4. OK if I pass the inputparameters to the controller via get over object-id?
+Is there a possibility to pass the object directly?
+
+5. What will be done in the last lectures? Have theses arguments to be considered in the project
