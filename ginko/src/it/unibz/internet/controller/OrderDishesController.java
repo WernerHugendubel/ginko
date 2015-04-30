@@ -45,13 +45,14 @@ public class OrderDishesController extends HttpServlet {
 		}else if (action.equals("error")){
 			//do nothing
 		}else if (action.equals("addDish"))
+			//do nothing
 		{
 			//insert dish into orderdetails
 			int dishId=Integer.parseInt(request.getParameter("dishId"));
 			try {
 				this.mealReservationService.addDishToOrder(orderId, dishId);
 			} catch (Exception e) {
-				
+				//pass exception to request 
 				request.setAttribute("error", e.getMessage());
 				request.setAttribute("action", "error");
 			}

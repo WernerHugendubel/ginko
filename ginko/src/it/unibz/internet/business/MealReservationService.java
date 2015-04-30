@@ -1,13 +1,7 @@
 package it.unibz.internet.business;
 
-import it.unibz.internet.dao.DishDAOInterface;
-import it.unibz.internet.dao.OrderDAOInterface;
-import it.unibz.internet.dao.PatientDAOInterface;
-import it.unibz.internet.dao.RestrictionDAOInterface;
-import it.unibz.internet.dao.implementation.DishDAO;
-import it.unibz.internet.dao.implementation.OrderDAO;
-import it.unibz.internet.dao.implementation.PatientDAO;
-import it.unibz.internet.dao.implementation.RestrictionDAO;
+import it.unibz.internet.dao.Dao;
+import it.unibz.internet.dao.DaoImpl;
 import it.unibz.internet.domain.Dish;
 import it.unibz.internet.domain.Order;
 import it.unibz.internet.domain.Patient;
@@ -17,21 +11,16 @@ import java.util.List;
 
 public class MealReservationService {
 
-	PatientDAOInterface patientDAO;
-	DishDAOInterface dishDAO;
-	OrderDAOInterface orderDAO;
-	RestrictionDAOInterface restrictionDAO;
+	Dao dao;
 
 	public MealReservationService() {
 		// TODO: retrieve DAO implementation through factory class
-		patientDAO = new PatientDAO();
-		dishDAO = new DishDAO();
-		orderDAO = new OrderDAO();
-		restrictionDAO = new RestrictionDAO();
+		dao = new DaoImpl();
+		
 	}
 
 	public List<Patient> getPatients() {
-		return patientDAO.getPatients();
+		return dao.getPatients();
 	}
 
 	public boolean addPatient(String patname, int patientbednr) {
@@ -41,38 +30,38 @@ public class MealReservationService {
 
 		// TODO: Business logic: check patient constraints before save
 		// save to db
-		this.patientDAO.addNew(pat);
+		this.dao.addNew(pat);
 		return true;
 	}
 
 	public Patient getPatient(int id) {
-		return this.patientDAO.getPatient(id);
+		return this.dao.getPatient(id);
 	}
 
 	public void updatePatient(int patientid, String patname, int patientbednr) {
-		Patient pat = this.patientDAO.getPatient(patientid);
+		Patient pat = this.dao.getPatient(patientid);
 		pat.setName(patname);
 		pat.setBednr(patientbednr);
 
 		// TODO: Business logic: check patient constraints before save
 		// save to db
-		this.patientDAO.update(pat);
+		this.dao.updatePatient(pat);
 	}
 
 	public List<Order> getOrderList(int patientId) {
-		return this.orderDAO.getOrderList(patientId);
+		return this.dao.getOrderList(patientId);
 	}
 
 	public Order getOrder(int orderId) {
-		return this.orderDAO.getOrder(orderId);
+		return this.dao.getOrder(orderId);
 	}
 
 	public List<Dish> getDishs() {
-		return this.dishDAO.getDishs();
+		return this.dao.getDishs();
 	}
 
 	public Dish getDish(int dishId) {
-		return this.dishDAO.getDish(dishId);
+		return this.dao.getDish(dishId);
 	}
 
 	public void addDishToOrder(int orderId, int dishId) throws Exception {
@@ -93,7 +82,7 @@ public class MealReservationService {
 		l.add(d); 
 		o.setDishs(l);
 		// Write order details to DB
-		this.orderDAO.writeOrderDetails(o);
+		this.dao.updateOrderDetails(o);
 	}
 
 	public void removeDishFromOrder(int orderId, int dishId) {
@@ -102,7 +91,7 @@ public class MealReservationService {
 		List<Dish> l = o.getDishs();
 		l.remove(d);
 		o.setDishs(l);
-		this.orderDAO.writeOrderDetails(o);
+		this.dao.updateOrderDetails(o);
 	}
 
 }
