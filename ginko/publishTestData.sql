@@ -1,9 +1,9 @@
 TRUNCATE TABLE patient CASCADE;
-INSERT INTO patient (patientid, name, bednr) VALUES (1, 'Paolo Rossi', 101);
+INSERT INTO patient (patientid, name, bednr) VALUES (1, 'Yanis Varoufakis', 101);
 INSERT INTO patient (patientid, name, bednr) VALUES (2, 'Barrack Obama', 102);
 INSERT INTO patient (patientid, name, bednr) VALUES (3, 'Angela Merkel', 104);
-INSERT INTO patient (patientid, name, bednr) VALUES (4, 'Mario Draghi', 203);
-INSERT INTO patient (patientid, name, bednr) VALUES (5, 'Enrico Letta', 202);
+INSERT INTO patient (patientid, name, bednr) VALUES (4, 'Vladimir Putin', 203);
+INSERT INTO patient (patientid, name, bednr) VALUES (5, 'Matteo Renzi', 202);
 
 TRUNCATE TABLE dish CASCADE;
 INSERT INTO dish (dishid, name, price) VALUES (2, 'Lasagne', 2.20);
