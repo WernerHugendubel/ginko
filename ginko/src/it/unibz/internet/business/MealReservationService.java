@@ -1,4 +1,4 @@
-package it.unibz.internet.Business;
+package it.unibz.internet.business;
 
 import it.unibz.internet.dao.DishDAOInterface;
 import it.unibz.internet.dao.OrderDAOInterface;

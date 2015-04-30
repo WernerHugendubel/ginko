@@ -1,6 +1,6 @@
 package it.unibz.internet.controller;
 
-import it.unibz.internet.Business.MealReservationService;
+import it.unibz.internet.business.MealReservationService;
 import it.unibz.internet.domain.Order;
 import it.unibz.internet.domain.Patient;
 
