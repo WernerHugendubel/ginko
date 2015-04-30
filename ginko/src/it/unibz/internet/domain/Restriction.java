@@ -19,41 +19,75 @@ public class Restriction implements Serializable {
     private String name;
     private List<Dish> dishs = new ArrayList<>();
 
+    /**
+     * Constructor
+     */
     public Restriction() {
     }
 
+    /**
+     * Constructor
+     * @param restrictionId id of the restriction
+     * @param name name of the restriction
+     */
     public Restriction(int restrictionId, String name) {
         this.restrictionId = restrictionId;
         this.name = name;
     }
 
+    /**
+     * Constructor
+     * @param restrictionId id of the restriction
+     * @param name name of the restriction
+     * @param dishs list of dishes falling in restriction
+     */
     public Restriction(int restrictionId, String name, List<Dish> dishs) {
         this.restrictionId = restrictionId;
         this.name = name;
         this.dishs = dishs;
     }
 
-    public int getRestrictionId() {
-        return this.restrictionId;
-    }
+	/**
+	 * @return the restrictionId
+	 */
+	public int getRestrictionId() {
+		return restrictionId;
+	}
 
-    public void setRestrictionId(int restrictionId) {
-        this.restrictionId = restrictionId;
-    }
+	/**
+	 * @param restrictionId the restrictionId to set
+	 */
+	public void setRestrictionId(int restrictionId) {
+		this.restrictionId = restrictionId;
+	}
 
-    public String getName() {
-        return this.name;
-    }
+	/**
+	 * @return the name
+	 */
+	public String getName() {
+		return name;
+	}
 
-    public void setName(String name) {
-        this.name = name;
-    }
+	/**
+	 * @param name the name to set
+	 */
+	public void setName(String name) {
+		this.name = name;
+	}
 
-    public List<Dish> getDishs() {
-        return this.dishs;
-    }
+	/**
+	 * @return the dishs
+	 */
+	public List<Dish> getDishs() {
+		return dishs;
+	}
 
-    public void setDishs(List<Dish> dishs) {
-        this.dishs = dishs;
-    }
+	/**
+	 * @param dishs the dishs to set
+	 */
+	public void setDishs(List<Dish> dishs) {
+		this.dishs = dishs;
+	}
+
+
 }
