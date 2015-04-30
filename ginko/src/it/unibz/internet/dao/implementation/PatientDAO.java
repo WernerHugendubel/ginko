@@ -1,5 +1,8 @@
-package it.unibz.internet.db;
+package it.unibz.internet.dao.implementation;
 
+import it.unibz.internet.dao.DatabaseConnectionFactory;
+import it.unibz.internet.dao.PatientDAOInterface;
+import it.unibz.internet.dao.RestrictionDAOInterface;
 import it.unibz.internet.domain.Patient;
 import it.unibz.internet.domain.Restriction;
 
@@ -7,14 +10,17 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-public class PatientDAO {
+public class PatientDAO implements PatientDAOInterface {
 
+	/* (non-Javadoc)
+	 * @see it.unibz.internet.db.PatientDAOInterface#addNew(it.unibz.internet.domain.Patient)
+	 */
+	@Override
 	public void addNew(Patient pat) {
 		Connection con = DatabaseConnectionFactory.createConnection();
 		PreparedStatement pstmt = null;
@@ -49,6 +55,10 @@ public class PatientDAO {
 
 	}
 
+	/* (non-Javadoc)
+	 * @see it.unibz.internet.db.PatientDAOInterface#delete(int)
+	 */
+	@Override
 	public void delete(int id) {
 		Connection con = DatabaseConnectionFactory.createConnection();
 		PreparedStatement pstmt = null;
@@ -81,6 +91,10 @@ public class PatientDAO {
 		}
 	}
 
+	/* (non-Javadoc)
+	 * @see it.unibz.internet.db.PatientDAOInterface#update(it.unibz.internet.domain.Patient)
+	 */
+	@Override
 	public void update(Patient p) {
 		Connection con = DatabaseConnectionFactory.createConnection();
 		PreparedStatement pstmt = null;
@@ -113,6 +127,10 @@ public class PatientDAO {
 		}
 	}
 
+	/* (non-Javadoc)
+	 * @see it.unibz.internet.db.PatientDAOInterface#getPatient(int)
+	 */
+	@Override
 	public Patient getPatient(int id) {
 		Patient pat = null;
 		Connection con = DatabaseConnectionFactory.createConnection();
@@ -132,7 +150,7 @@ public class PatientDAO {
 			pstmt2.setInt(1, id);
 			rs=pstmt2.executeQuery();
 			List<Restriction> restrictionset = new ArrayList<>();
-			RestrictionDAO restDAO = new RestrictionDAO();
+			RestrictionDAOInterface restDAO = new RestrictionDAO();
 			while(rs.next())
 			{
 				int restrictionid = rs.getInt(1);
@@ -165,15 +183,18 @@ public class PatientDAO {
 	}
 	
 
+	/* (non-Javadoc)
+	 * @see it.unibz.internet.db.PatientDAOInterface#getPatients()
+	 */
+	@Override
 	public List<Patient> getPatients() {
 		List<Patient> list = new ArrayList<>();
 		Connection con = DatabaseConnectionFactory.createConnection();
-		Statement stmt = null;
-		RestrictionDAO restrictionDAO = new RestrictionDAO();
-        PreparedStatement pstmt = null;
+		PreparedStatement pstmt = null;
+		RestrictionDAOInterface restrictionDAO = new RestrictionDAO();
 		try {
-			stmt = con.createStatement();
-			ResultSet rs = stmt.executeQuery("SELECT * FROM patient ORDER BY patientId");
+			pstmt = con.prepareStatement("SELECT * FROM patient ORDER BY patientId");
+			ResultSet rs = pstmt.executeQuery();
 			while (rs.next()) {
 				Patient pat = new Patient();
 				pat.setPatientId(rs.getInt(1));
@@ -198,9 +219,6 @@ public class PatientDAO {
 					Level.SEVERE, null, ex);
 		} finally {
 			try {
-				if (stmt != null) {
-					stmt.close();
-				}
 				if (pstmt != null) {
 					pstmt.close();
 				}

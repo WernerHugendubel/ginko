@@ -1,7 +1,6 @@
 package it.unibz.internet.controller;
 
-import it.unibz.internet.db.PatientDAO;
-import it.unibz.internet.domain.Patient;
+import it.unibz.internet.Business.MealReservationService;
 
 import java.io.IOException;
 
@@ -19,14 +18,14 @@ import javax.servlet.http.HttpServletResponse;
 public class PatientAddController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
-	private PatientDAO patientDAO;
+	private MealReservationService mealReservationService;
 
 	/**
 	 * @see HttpServlet#HttpServlet()
 	 */
 	public PatientAddController() {
 		super();
-		this.patientDAO = new PatientDAO();
+		this.mealReservationService = new MealReservationService();
 	}
 
 	protected void doGet(HttpServletRequest request,
@@ -44,19 +43,11 @@ public class PatientAddController extends HttpServlet {
 		String bednrstring = request.getParameter("bedNr");
 		if (!patname.equals("") && !bednrstring.equals("")) {
 			int patientbednr = Integer.parseInt(request.getParameter("bedNr"));
-
-			Patient pat = new Patient();
-			pat.setName(patname);
-			pat.setBednr(patientbednr);
-
-			// TODO: Business logic: check patient constraints before save
-
-			// save to db
-			this.patientDAO.addNew(pat);
+			this.mealReservationService.addPatient(patname, patientbednr);
 		}
 
 		// pass generated patient to next page
-		request.setAttribute("patientlist", this.patientDAO.getPatients());
+		request.setAttribute("patientlist", this.mealReservationService.getPatients());
 		RequestDispatcher dispatcher = request
 				.getRequestDispatcher("/WEB-INF/jsp/patientList.jsp");
 		dispatcher.forward(request, response);

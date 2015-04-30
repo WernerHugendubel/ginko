@@ -1,8 +1,6 @@
 package it.unibz.internet.controller;
 
-import it.unibz.internet.db.DishDAO;
-import it.unibz.internet.db.OrderDAO;
-import it.unibz.internet.db.PatientDAO;
+import it.unibz.internet.Business.MealReservationService;
 import it.unibz.internet.domain.Dish;
 import it.unibz.internet.domain.Order;
 import it.unibz.internet.domain.Patient;
@@ -25,17 +23,13 @@ import javax.servlet.http.HttpServletResponse;
 public class OrderDishesController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
-	private OrderDAO orderDAO;
-	private DishDAO dishDAO;
-	private PatientDAO patientDAO;
+	private MealReservationService mealReservationService;
 	/**
 	 * @see HttpServlet#HttpServlet()
 	 */
 	public OrderDishesController() {
 		super();
-		this.orderDAO = new OrderDAO();
-		this.dishDAO = new DishDAO();
-		this.patientDAO = new PatientDAO();
+		this.mealReservationService = new MealReservationService();
 	}
 
 	protected void doGet(HttpServletRequest request,
@@ -45,34 +39,33 @@ public class OrderDishesController extends HttpServlet {
 		String action = request.getParameter("action");
 		//get orderid from request
 		int orderId = Integer.parseInt(request.getParameter("orderId"));
-		Order o = this.orderDAO.getOrder(orderId);
-		request.setAttribute("order", o);
-		Patient pat = this.patientDAO.getPatient(o.getPatientId());
-		request.setAttribute("patient",  pat);
 
 		if (action==null){
 			//do nothing
-		
+		}else if (action.equals("error")){
+			//do nothing
 		}else if (action.equals("addDish"))
 		{
 			//insert dish into orderdetails
 			int dishId=Integer.parseInt(request.getParameter("dishId"));
-			Dish d = this.dishDAO.getDish(dishId);
-			List<Dish> l = o.getDishs();
-			l.add(d); //TODO: check if restriction
-		    o.setDishs(l);
-		    this.orderDAO.writeOrderDetails(o);
+			try {
+				this.mealReservationService.addDishToOrder(orderId, dishId);
+			} catch (Exception e) {
+				
+				request.setAttribute("error", e.getMessage());
+				request.setAttribute("action", "error");
+			}
 		}else if (action.equals("removeDish")){
 			//remove dish from orderdetails
 			int dishId=Integer.parseInt(request.getParameter("dishId"));
-			Dish d = this.dishDAO.getDish(dishId);
-			List<Dish> l = o.getDishs();
-			l.remove(d); //TODO: check if restriction
-		    o.setDishs(l);
-		    this.orderDAO.writeOrderDetails(o);
+			this.mealReservationService.removeDishFromOrder(orderId, dishId);
 
 		}
-		List<Dish> availdishes = this.dishDAO.getDishs();
+		Order o = this.mealReservationService.getOrder(orderId);
+		request.setAttribute("order", o);
+		Patient pat = this.mealReservationService.getPatient(o.getPatientId());
+		request.setAttribute("patient",  pat);
+		List<Dish> availdishes = this.mealReservationService.getDishs();
 		request.setAttribute("availabledishes", availdishes);
 		RequestDispatcher dispatcher = request
 				.getRequestDispatcher("/WEB-INF/jsp/orderDishes.jsp");

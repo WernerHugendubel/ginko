@@ -1,7 +1,6 @@
 package it.unibz.internet.controller;
 
-import it.unibz.internet.db.OrderDAO;
-import it.unibz.internet.db.PatientDAO;
+import it.unibz.internet.Business.MealReservationService;
 import it.unibz.internet.domain.Order;
 import it.unibz.internet.domain.Patient;
 
@@ -23,15 +22,13 @@ import javax.servlet.http.HttpServletResponse;
 public class PatientOrdersController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
-	private PatientDAO patientDAO;
-	private OrderDAO orderDAO;
+	private MealReservationService mealReservationService;
 	/**
 	 * @see HttpServlet#HttpServlet()
 	 */
 	public PatientOrdersController() {
 		super();
-		this.patientDAO = new PatientDAO();
-		this.orderDAO = new OrderDAO();
+		this.mealReservationService = new MealReservationService();
 	}
 
 	protected void doGet(HttpServletRequest request,
@@ -39,9 +36,9 @@ public class PatientOrdersController extends HttpServlet {
 
 		//get patientid from request
 		int patientId = Integer.parseInt(request.getParameter("patientId"));
-		Patient pat = this.patientDAO.getPatient(patientId);
+		Patient pat = this.mealReservationService.getPatient(patientId);
 		request.setAttribute("patient", pat);
-		List<Order> orders = this.orderDAO.getOrderList(patientId);
+		List<Order> orders = this.mealReservationService.getOrderList(patientId);
 		request.setAttribute("orders", orders);
 
 		RequestDispatcher dispatcher = request

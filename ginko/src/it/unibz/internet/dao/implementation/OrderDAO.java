@@ -1,5 +1,8 @@
-package it.unibz.internet.db;
+package it.unibz.internet.dao.implementation;
 
+import it.unibz.internet.dao.DatabaseConnectionFactory;
+import it.unibz.internet.dao.DishDAOInterface;
+import it.unibz.internet.dao.OrderDAOInterface;
 import it.unibz.internet.domain.Dish;
 import it.unibz.internet.domain.Order;
 
@@ -12,13 +15,17 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-public class OrderDAO {
+public class OrderDAO implements OrderDAOInterface {
 
+	/* (non-Javadoc)
+	 * @see it.unibz.internet.db.OrderDAOInterface#getOrder(int)
+	 */
+	@Override
 	public Order getOrder(int orderId){
 		Order order = null;
 		Connection con = DatabaseConnectionFactory.createConnection();
 		PreparedStatement pstmt=null;
-		DishDAO dishDAO = new DishDAO();
+		DishDAOInterface dishDAO = new DishDAO();
 		try {
 			pstmt = con.prepareStatement("SELECT * FROM orders WHERE orderId=?");
 			pstmt.setInt(1, orderId);
@@ -60,12 +67,16 @@ public class OrderDAO {
 		}
 		return order;
 	}
+	/* (non-Javadoc)
+	 * @see it.unibz.internet.db.OrderDAOInterface#getOrderList(int)
+	 */
+	@Override
 	public List<Order> getOrderList(int patientId)
 	{
 		ArrayList<Order> orderList = new ArrayList<>();
 		Connection con = DatabaseConnectionFactory.createConnection();
 		PreparedStatement pstmt=null;
-		DishDAO dishDAO = new DishDAO();
+		DishDAOInterface dishDAO = new DishDAO();
 		try {
 			pstmt = con.prepareStatement("SELECT * FROM orders WHERE patientId=?");
 			pstmt.setInt(1, patientId);
@@ -109,6 +120,10 @@ public class OrderDAO {
 		return orderList;
 	}
 	
+	/* (non-Javadoc)
+	 * @see it.unibz.internet.db.OrderDAOInterface#writeOrderDetails(it.unibz.internet.domain.Order)
+	 */
+	@Override
 	public boolean writeOrderDetails(Order o){
 		Connection con = DatabaseConnectionFactory.createConnection();
 		PreparedStatement pstmt=null;

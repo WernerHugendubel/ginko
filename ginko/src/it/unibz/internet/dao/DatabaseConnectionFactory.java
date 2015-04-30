@@ -1,4 +1,4 @@
-package it.unibz.internet.db;
+package it.unibz.internet.dao;
 
 import java.sql.Connection;
 import java.sql.DriverManager;

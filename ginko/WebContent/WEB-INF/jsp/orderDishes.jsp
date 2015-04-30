@@ -24,7 +24,9 @@
 	<c:forEach items="${availabledishes}" var="dish">
 	    ${dish.dishId} - ${dish.name}: <a href='${pageContext.request.contextPath}/orderDishes?orderId=${order.orderId}&dishId=${dish.dishId}&action=addDish'>select...</a><br>
 	</c:forEach>
-	
 	<hr>
+	<c:if test="${error  != null}">
+   		<p>Error is: <c:out value="${error}"/></p>
+   	</c:if>
 </body>
 </html>
