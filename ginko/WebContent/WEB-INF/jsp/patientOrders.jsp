@@ -10,7 +10,7 @@
 <body>
 
 	<a href='${pageContext.request.contextPath}'>Home</a>
-	<h3>Order for patient</h3>
+	<h3>Order for patient (yellow = rated orders)</h3>
 	id:${requestScope.patient.patientId} <br>
 	name:${requestScope.patient.name}<br> 
     bednr:${requestScope.patient.bednr}<br>
@@ -22,7 +22,10 @@
 	<hr>
 	<h3>Orders</h3>
 	<c:forEach items="${requestScope.orders}" var="order">
-	    ${order.orderId} - ${order.orderDate} 	<a href='${pageContext.request.contextPath}/orderDishes?orderId=${order.orderId}'>select dishes...</a> <br>
+	   <c:if test="${order.hasRatings()==true}">
+	      <p style="background:yellow">
+	   </c:if>
+	    ${order.orderId} - ${order.orderDate} 	<a href='${pageContext.request.contextPath}/orderDishes?orderId=${order.orderId}'>select dishes...</a> </p>
 	</c:forEach>
 	<hr>
 	<a href='${pageContext.request.contextPath}/orderAdd?patientId=${patient.patientId}'>add new order...</a>

@@ -19,7 +19,7 @@
 	</c:forEach>
 	<hr>
 	<c:if test="${order.hasRatings()==true}">
-	   <h3>Ratings are given, modification is disabled</h3>
+	   <h3 style="background:red">Ratings are given, modification is disabled</h3>
 	   <hr>
 	</c:if>
 	<h4>Seleted dishes:</h4>
