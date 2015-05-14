@@ -104,6 +104,11 @@ public class MealReservationService {
 		return this.dao.getDishs();
 	}
 
+	/**
+	 * Get dish List by rating: first already selected meals ordered by avg rating, then the not yet selected dishes
+	 * 
+	 * @return lisf of ordered dishes
+	 */
 	public List<Dish> getDishsRated(){
 		//TODO: order by rating 
 		//get List of all in the past selected dishes with average rating

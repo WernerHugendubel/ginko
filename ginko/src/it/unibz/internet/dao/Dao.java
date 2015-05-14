@@ -104,6 +104,9 @@ public interface Dao {
 	 */
 	public abstract List<Restriction> getRestrictions();
 
+	/**
+	 * @return a list of all dishes with their average rating
+	 */
 	public List<DishRating> getDishWithAvgRating();
 
 }
