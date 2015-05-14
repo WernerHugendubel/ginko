@@ -1,6 +1,7 @@
 package it.unibz.internet.dao;
 
 import it.unibz.internet.domain.Dish;
+import it.unibz.internet.domain.DishRating;
 import it.unibz.internet.domain.Order;
 import it.unibz.internet.domain.Patient;
 import it.unibz.internet.domain.Restriction;
@@ -112,13 +113,15 @@ public class DaoImpl implements Dao {
 				PreparedStatement pstmt2 = con.prepareStatement("SELECT * FROM orderdetails WHERE orderid=?");
 				pstmt2.setInt(1, order.getOrderId());
 				ResultSet resultSetODetails = pstmt2.executeQuery();
-				List<Dish> dishList = new ArrayList<>();
+				List<DishRating> dishList = new ArrayList<>();
 				while(resultSetODetails.next())
 				{
 					Dish dish = this.getDish(resultSetODetails.getInt(2));
-					dishList.add(dish);
+					int rating = resultSetODetails.getInt(3);
+					DishRating dr = new DishRating(dish, rating);
+					dishList.add(dr);
 				}
-				order.setDishs(dishList);
+				order.setDishRatings(dishList);
 			}
 		} catch (SQLException ex) {
 			ex.printStackTrace();
@@ -160,13 +163,15 @@ public class DaoImpl implements Dao {
 				PreparedStatement pstmt2 = con.prepareStatement("SELECT * FROM orderdetails WHERE orderid=?");
 				pstmt2.setInt(1, order.getOrderId());
 				ResultSet resultSetODetails = pstmt2.executeQuery();
-				List<Dish> dishList = new ArrayList<>();
+				List<DishRating> dishList = new ArrayList<>();
 				while(resultSetODetails.next())
 				{
 					Dish dish = this.getDish(resultSetODetails.getInt(2));
-					dishList.add(dish);
+					Integer rating = resultSetODetails.getInt(3);
+					DishRating dr = new DishRating(dish, rating);
+					dishList.add(dr);
 				}
-				order.setDishs(dishList);
+				order.setDishRatings(dishList);
 				orderList.add(order);
 			}
 		} catch (SQLException ex) {
@@ -198,11 +203,13 @@ public class DaoImpl implements Dao {
 			pstmt = con.prepareStatement("DELETE FROM orderdetails WHERE orderId=?");
 			pstmt.setInt(1, o.getOrderId());
 			pstmt.execute();
-			for(int i=0;i<o.getDishs().size();i++){
-				Dish dish = o.getDishs().get(i);
-				pstmt = con.prepareStatement("INSERT INTO orderdetails (orderId, dishId) VALUES (?,?)");
+			for(int i=0;i<o.getDishRatings().size();i++){
+				DishRating dish = o.getDishRatings().get(i);
+				pstmt = con.prepareStatement("INSERT INTO orderdetails (orderId, dishId, rating) VALUES (?,?,?)");
 				pstmt.setInt(1, o.getOrderId());
-				pstmt.setInt(2, dish.getDishId());
+				pstmt.setInt(2, dish.getDish().getDishId());
+				pstmt.setInt(3, dish.getRating());
+				
 				pstmt.execute();
 			}
 		} catch (SQLException ex) {

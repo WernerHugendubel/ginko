@@ -3,6 +3,7 @@ package it.unibz.internet.business;
 import it.unibz.internet.dao.Dao;
 import it.unibz.internet.dao.DaoImpl;
 import it.unibz.internet.domain.Dish;
+import it.unibz.internet.domain.DishRating;
 import it.unibz.internet.domain.Order;
 import it.unibz.internet.domain.Patient;
 import it.unibz.internet.domain.Restriction;
@@ -114,10 +115,11 @@ public class MealReservationService {
 	 * Add a dish to an order 
 	 * @param orderId id of the order where we insert dish
 	 * @param dishId the id of the dish to insert
-	 * @throws Exception if dish is already present in order
+	 * @throws Exception if dish is already present in order or if rating present
 	 */
 	public void addDishToOrder(int orderId, int dishId) throws Exception {
 		Dish d = this.getDish(dishId);
+		DishRating dr = new DishRating(d,0);
 		Order o = this.getOrder(orderId);
 		Patient p = this.getPatient(o.getPatientId());
 		
@@ -129,10 +131,14 @@ public class MealReservationService {
 			}
 		}
 
+		//Check if ratings are already present if yes throw exception
+		if (o.hasRatings())
+			throw new Exception("Dish cannot be removed, rating already present");
+		
 		//all ok, add to list of dishes of the order
-		List<Dish> l = o.getDishs();
-		l.add(d); 
-		o.setDishs(l);
+		List<DishRating> l = o.getDishRatings();
+		l.add(dr); 
+		o.setDishRatings(l);
 		// Write order details to DB
 		this.dao.updateOrderDetails(o);
 	}
@@ -141,13 +147,26 @@ public class MealReservationService {
 	 * Removes a dish from an order
 	 * @param orderId id of the order
 	 * @param dishId id of the dish to remove
+	 * @throws Exception 
 	 */
-	public void removeDishFromOrder(int orderId, int dishId) {
+	public void removeDishFromOrder(int orderId, int dishId) throws Exception {
 		Dish d = this.getDish(dishId);
+		DishRating dishRating = new DishRating(d, 0);
+		
 		Order o = this.getOrder(orderId);
-		List<Dish> l = o.getDishs();
-		l.remove(d);
-		o.setDishs(l);
+		if (o.hasRatings())
+			throw new Exception("Dish cannot be removed, rating already present");
+				
+		List<DishRating> l = o.getDishRatings();
+//		for (DishRating dr : l) {
+//			if (dr.getRating()!=0){				
+//				throw new Exception("Dish cannot be removed, rating already present");
+//			}
+//		}
+		//ok, remove dish
+
+		l.remove(dishRating);
+		o.setDishRatings(l);
 		this.dao.updateOrderDetails(o);
 	}
 

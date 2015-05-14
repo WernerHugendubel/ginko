@@ -59,8 +59,15 @@ public class OrderDishesController extends HttpServlet {
 		}else if (action.equals("removeDish")){
 			//remove dish from orderdetails
 			int dishId=Integer.parseInt(request.getParameter("dishId"));
-			this.mealReservationService.removeDishFromOrder(orderId, dishId);
-
+			try{
+				this.mealReservationService.removeDishFromOrder(orderId, dishId);
+			}
+			catch (Exception e)
+			{
+				//pass exception to request 
+				request.setAttribute("error", e.getMessage());
+				request.setAttribute("action", "error");				
+			}
 		}
 		Order o = this.mealReservationService.getOrder(orderId);
 		request.setAttribute("order", o);
