@@ -118,7 +118,7 @@ public class MealReservationService {
 		//add the dishes by 
 		ordereddishes.addAll(alldishes);
 		
-		return this.dao.getDishs();		
+		return ordereddishes;		
 	}
 	/**
 	 * Find a dish by id
