@@ -2,7 +2,7 @@ package it.unibz.internet.domain;
 
 public class DishRating {
 	Dish dish;
-	int rating;
+	double rating;
 
 	/**
 	 * @return the dish
@@ -22,7 +22,7 @@ public class DishRating {
 	/**
 	 * @return the rating
 	 */
-	public int getRating() {
+	public double getRating() {
 		return rating;
 	}
 
@@ -30,7 +30,7 @@ public class DishRating {
 	 * @param rating
 	 *            the rating to set
 	 */
-	public void setRating(int rating) {
+	public void setRating(double rating) {
 		this.rating = rating;
 	}
 
@@ -39,7 +39,7 @@ public class DishRating {
 	 * @param dish
 	 * @param rating
 	 */
-	public DishRating(Dish dish, int rating) {
+	public DishRating(Dish dish, double rating) {
 		this.dish = dish;
 		this.rating=rating;
 	}

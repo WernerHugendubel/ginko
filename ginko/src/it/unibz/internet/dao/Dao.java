@@ -1,6 +1,7 @@
 package it.unibz.internet.dao;
 
 import it.unibz.internet.domain.Dish;
+import it.unibz.internet.domain.DishRating;
 import it.unibz.internet.domain.Order;
 import it.unibz.internet.domain.Patient;
 import it.unibz.internet.domain.Restriction;
@@ -102,5 +103,7 @@ public interface Dao {
 	 * @return a list of all restrictions
 	 */
 	public abstract List<Restriction> getRestrictions();
+
+	public List<DishRating> getDishWithAvgRating();
 
 }

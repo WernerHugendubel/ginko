@@ -15,6 +15,10 @@
 	name:${requestScope.patient.name}<br> 
     bednr:${requestScope.patient.bednr}<br>
 	<hr>
+	<c:if test="${order.hasRatings()==true}">
+	   <h3>Ratings are given, modification is disabled</h3>
+	   <hr>
+	</c:if>
 	<h4>Seleted dishes:</h4>
 	<c:forEach items="${order.dishRatings}" var="dishRating">
 	    ${dishRating.dish.dishId} - ${dishRating.dish.name}: <a href='${pageContext.request.contextPath}/orderDishes?orderId=${order.orderId}&dishId=${dishRating.dish.dishId}&action=removeDish'>remove...</a><br>

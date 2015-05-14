@@ -8,6 +8,7 @@ import it.unibz.internet.domain.Order;
 import it.unibz.internet.domain.Patient;
 import it.unibz.internet.domain.Restriction;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -99,9 +100,26 @@ public class MealReservationService {
 	 * @return a list of all available dishes
 	 */
 	public List<Dish> getDishs() {
+		//TODO: order by rating 
 		return this.dao.getDishs();
 	}
 
+	public List<Dish> getDishsRated(){
+		//TODO: order by rating 
+		//get List of all in the past selected dishes with average rating
+		//get list of all dishes
+		List<Dish> alldishes = this.dao.getDishs();
+		ArrayList<Dish> ordereddishes = new ArrayList<>();
+		List<DishRating> rateddishes = this.dao.getDishWithAvgRating();
+		for(DishRating dr:rateddishes){
+			ordereddishes.add(dr.getDish());
+			alldishes.remove(dr.getDish());
+		}
+		//add the dishes by 
+		ordereddishes.addAll(alldishes);
+		
+		return this.dao.getDishs();		
+	}
 	/**
 	 * Find a dish by id
 	 * @param dishId the id of the dish to search
@@ -122,7 +140,11 @@ public class MealReservationService {
 		DishRating dr = new DishRating(d,0);
 		Order o = this.getOrder(orderId);
 		Patient p = this.getPatient(o.getPatientId());
-		
+
+		//Check if ratings are already present if yes throw exception
+		if (o.hasRatings())
+			throw new Exception("Dish cannot be added or removed, rating already present");
+
 		//Check if dish falls in restriction
 		List<Restriction> restrictions = p.getRestrictions();
 		for (Restriction r : restrictions) {
@@ -134,9 +156,6 @@ public class MealReservationService {
 		//Check if dish is already present
 		if(o.getSelectedDishs().contains(d))
 			throw new Exception("Dish already selected");
-		//Check if ratings are already present if yes throw exception
-		if (o.hasRatings())
-			throw new Exception("Dish cannot be removed, rating already present");
 		
 		//all ok, add to list of dishes of the order
 		List<DishRating> l = o.getDishRatings();
@@ -169,6 +188,12 @@ public class MealReservationService {
 	}
 	
 	
+	/**
+	 * Sets the rating of a dish in a specified order
+	 * @param orderId the orderid
+	 * @param dishId the dishid 
+	 * @param rating rating of the dish 0 not rated > 1 rating
+	 */
 	public void setDishRating(int orderId, int dishId, int rating){
 		Order o=this.getOrder(orderId);
 		List<DishRating>drl= o.getDishRatings();

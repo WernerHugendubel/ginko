@@ -208,7 +208,7 @@ public class DaoImpl implements Dao {
 				pstmt = con.prepareStatement("INSERT INTO orderdetails (orderId, dishId, rating) VALUES (?,?,?)");
 				pstmt.setInt(1, o.getOrderId());
 				pstmt.setInt(2, dish.getDish().getDishId());
-				pstmt.setInt(3, dish.getRating());
+				pstmt.setFloat(3, (float)dish.getRating());
 				
 				pstmt.execute();
 			}
@@ -533,6 +533,38 @@ public class DaoImpl implements Dao {
 		return restrictionList;
 	}
 
+	public List<DishRating> getDishWithAvgRating()
+	{
+		ArrayList<DishRating> drList = new ArrayList<>();
+		Connection con = DatabaseConnectionFactory.createConnection();
+		PreparedStatement pstmt=null;
+		try {
+			pstmt = con.prepareStatement("SELECT dishId, avg(rating) FROM orderDetails GROUP by dishId ORDER by avg(rating) DESC");
+			ResultSet rs = pstmt.executeQuery();
+			while (rs.next()) {
+				Dish d = this.getDish(rs.getInt(1));
+				DishRating dr = new DishRating(d, rs.getFloat(2));
+				drList.add(dr);
+			}
+		} catch (SQLException ex) {
+			ex.printStackTrace();
+			Logger.getLogger(DaoImpl.class.getName()).log(
+					Level.SEVERE, null, ex);
+		} finally {
+			try {
+				if (pstmt != null) {
+					pstmt.close();
+				}
+				if (con != null) {
+					con.close();
+				}
+			} catch (SQLException ex) {
+				ex.printStackTrace();
+				Logger.getLogger(DaoImpl.class.getName()).log(
+						Level.SEVERE, null, ex);
+			}
+		}
+		return drList;	}
 
 	@Override
 	public void insertOrder(Order o) {
