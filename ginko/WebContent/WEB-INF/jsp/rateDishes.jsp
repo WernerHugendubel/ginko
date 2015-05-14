@@ -24,7 +24,8 @@
 	</c:if>
 	<h4>Seleted dishes:</h4>
 	<c:forEach items="${order.dishRatings}" var="dishRating">
-	    ${dishRating.dish.dishId} - ${dishRating.dish.name}: <a href='${pageContext.request.contextPath}/orderDishes?orderId=${order.orderId}&dishId=${dishRating.dish.dishId}&action=removeDish'>remove...</a><br>
+	    ${dishRating.dish.dishId} - ${dishRating.dish.name}: <a href='${pageContext.request.contextPath}/orderDishes?orderId=${order.orderId}&dishId=${dishRating.dish.dishId}&action=removeDish'>remove...</a>
+		 <table><form action="/ginko/rateDishes?dishId=${dishRating.dish.dishId}?rate=1" method="post"> <input type="submit" value="rate 1"></form></table>
 	</c:forEach>
 	<hr>
 	<h4>Available dishes:</h4>

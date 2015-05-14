@@ -25,7 +25,7 @@
 	    <c:if test="${order.hasRatings()==true}">
 	      <p style="background:yellow">
 	   </c:if>
-	    ${order.orderId} - ${order.orderDate} 	<a href='${pageContext.request.contextPath}/rateDishes?orderId=${order.orderId}'>select dishes...</a> <p>
+	    ${order.orderId} - ${order.orderDate} 	<a href='${pageContext.request.contextPath}/rateDishes?orderId=${order.orderId}'>rate dishes...</a> <p>
 	</c:forEach>
 	<hr>
 	<a href='${pageContext.request.contextPath}/orderAdd?patientId=${patient.patientId}'>add new order...</a>
