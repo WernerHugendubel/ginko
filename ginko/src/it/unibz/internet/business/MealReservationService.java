@@ -131,6 +131,9 @@ public class MealReservationService {
 			}
 		}
 
+		//Check if dish is already present
+		if(o.getSelectedDishs().contains(d))
+			throw new Exception("Dish already selected");
 		//Check if ratings are already present if yes throw exception
 		if (o.hasRatings())
 			throw new Exception("Dish cannot be removed, rating already present");
