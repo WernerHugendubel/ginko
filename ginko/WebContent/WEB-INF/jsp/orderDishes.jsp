@@ -27,7 +27,7 @@
 	    ${dishRating.dish.dishId} - ${dishRating.dish.name}: <a href='${pageContext.request.contextPath}/orderDishes?orderId=${order.orderId}&dishId=${dishRating.dish.dishId}&action=removeDish'>remove...</a><br>
 	</c:forEach>
 	<hr>
-	<h4>Available dishes: TODO: no restriction checked; remove already selected</h4>
+	<h4>Available dishes:</h4>
 	<c:forEach items="${availabledishes}" var="dish">
 	    ${dish.dishId} - ${dish.name}: <a href='${pageContext.request.contextPath}/orderDishes?orderId=${order.orderId}&dishId=${dish.dishId}&action=addDish'>select...</a><br>
 	</c:forEach>

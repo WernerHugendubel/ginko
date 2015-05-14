@@ -73,7 +73,8 @@ public class OrderDishesController extends HttpServlet {
 		request.setAttribute("order", o);
 		Patient pat = this.mealReservationService.getPatient(o.getPatientId());
 		request.setAttribute("patient",  pat);
-		List<Dish> availdishes = this.mealReservationService.getDishsRated();
+		//List<Dish> availdishes = this.mealReservationService.getDishsRated();
+		List<Dish> availdishes = this.mealReservationService.getAvailableDishs(o);
 		request.setAttribute("availabledishes", availdishes);
 		RequestDispatcher dispatcher = request
 				.getRequestDispatcher("/WEB-INF/jsp/orderDishes.jsp");

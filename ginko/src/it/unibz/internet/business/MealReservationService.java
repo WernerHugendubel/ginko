@@ -100,8 +100,27 @@ public class MealReservationService {
 	 * @return a list of all available dishes
 	 */
 	public List<Dish> getDishs() {
-		//TODO: order by rating 
 		return this.dao.getDishs();
+	}
+	
+	
+	/**
+	 * 
+	 * @param o order
+	 * @return the selecteable dishes restrictions are checked
+	 */
+	public List <Dish> getAvailableDishs(Order o)
+	{
+		//get sorted dish list
+		List<Dish> availdishs = this.getDishsRated();
+		//remove the already selected dishes
+		availdishs.removeAll(o.getSelectedDishs());
+		//remove dishes with restriction
+		Patient pat = this.getPatient(o.getPatientId());
+	    for(Restriction r:pat.getRestrictions()){
+	    	availdishs.removeAll(r.getDishs());
+	    }
+		return availdishs;
 	}
 
 	/**
