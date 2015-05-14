@@ -48,13 +48,13 @@ public class Order implements Serializable {
 	 * @param patientId
 	 *            the id of the patient
 	 * @param dishRatings
-	 *            the ordered dishes
+	 *            the ordered dishes with ratings
 	 */
 	public Order(int orderId, Date orderDate, int patientId,
-			List<DishRating> dishs) {
+			List<DishRating> dishRatings) {
 		this.orderId = orderId;
 		this.orderDate = orderDate;
-		this.dishRatings = dishs;
+		this.dishRatings = dishRatings;
 	}
 
 	/**
@@ -133,6 +133,9 @@ public class Order implements Serializable {
 		this.dishRatings = dishRatings;
 	}
 
+	/**
+	 * @return a list of already selected dishes in the order
+	 */
 	public List<Dish> getSelectedDishs() {
 		ArrayList<Dish> dishlist = new ArrayList<>();
 		for (DishRating dr : this.dishRatings) {
@@ -141,6 +144,9 @@ public class Order implements Serializable {
 		return dishlist;
 	}
 
+	/**
+	 * @return true if the order has already some ratings, false otherwise
+	 */
 	public boolean hasRatings() {
 		boolean hasrat = false;
 		for (DishRating dr : this.dishRatings) {

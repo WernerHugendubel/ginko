@@ -1,5 +1,10 @@
 package it.unibz.internet.domain;
 
+/**
+ * Order Detail entry - Dish with rating
+ * @author Werner Frei <freiwe@gmail.com>
+ *
+ */
 public class DishRating {
 	Dish dish;
 	double rating;

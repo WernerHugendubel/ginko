@@ -47,7 +47,6 @@ public class MealReservationService {
 		pat.setName(patname);
 		pat.setBednr(patientbednr);
 
-		// TODO: Business logic: check patient constraints before save
 		// save to db
 		this.dao.addNew(pat);
 	}
@@ -72,7 +71,6 @@ public class MealReservationService {
 		pat.setName(patname);
 		pat.setBednr(patientbednr);
 
-		// TODO: Business logic: check patient constraints before save
 		// save to db
 		this.dao.updatePatient(pat);
 	}
@@ -129,20 +127,21 @@ public class MealReservationService {
 	 * @return lisf of ordered dishes
 	 */
 	public List<Dish> getDishsRated(){
-		//TODO: order by rating 
-		//get List of all in the past selected dishes with average rating
+		ArrayList<Dish> sortedDishList = new ArrayList<>();
+
 		//get list of all dishes
 		List<Dish> alldishes = this.dao.getDishs();
-		ArrayList<Dish> ordereddishes = new ArrayList<>();
+		
+		//get List of all in the past selected dishes with average rating
 		List<DishRating> rateddishes = this.dao.getDishWithAvgRating();
 		for(DishRating dr:rateddishes){
-			ordereddishes.add(dr.getDish());
+			sortedDishList.add(dr.getDish());
 			alldishes.remove(dr.getDish());
 		}
 		//add the dishes by 
-		ordereddishes.addAll(alldishes);
+		sortedDishList.addAll(alldishes);
 		
-		return ordereddishes;		
+		return sortedDishList;		
 	}
 	/**
 	 * Find a dish by id

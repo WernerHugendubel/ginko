@@ -568,7 +568,7 @@ public class DaoImpl implements Dao {
 
 	@Override
 	public void insertOrder(Order o) {
-		// TODO Auto-generated method stub
+		// TODO insertOrder not yet implemented
 		throw new RuntimeException("not yet implemented");
 	}
 }

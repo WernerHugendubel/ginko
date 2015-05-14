@@ -49,27 +49,6 @@ public class PatientOrdersController extends HttpServlet {
 	protected void doPost(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
 
-		// Read values from request
-//		String patname = request.getParameter("patientName");
-//		String bednrstring = request.getParameter("bedNr");
-//		if (!patname.equals("") && !bednrstring.equals("")) {
-//			int patientbednr = Integer.parseInt(request.getParameter("bedNr"));
-//
-//			Patient pat = new Patient();
-//			pat.setName(patname);
-//			pat.setBednr(patientbednr);
-//
-//			// TODO: Business logic: check patient constraints before save
-//
-//			// save to db
-//			this.patientDBService.addNew(pat);
-//		}
-//
-//		// pass generated patient to next page
-//		request.setAttribute("patientlist", this.patientDBService.getPatients());
-//		RequestDispatcher dispatcher = request
-//				.getRequestDispatcher("/WEB-INF/jsp/patientList.jsp");
-//		dispatcher.forward(request, response);
 	}
 
 }
