@@ -157,16 +157,23 @@ public class MealReservationService {
 		if (o.hasRatings())
 			throw new Exception("Dish cannot be removed, rating already present");
 				
-		List<DishRating> l = o.getDishRatings();
-//		for (DishRating dr : l) {
-//			if (dr.getRating()!=0){				
-//				throw new Exception("Dish cannot be removed, rating already present");
-//			}
-//		}
 		//ok, remove dish
+		List<DishRating> l = o.getDishRatings();
 
 		l.remove(dishRating);
 		o.setDishRatings(l);
+		this.dao.updateOrderDetails(o);
+	}
+	
+	
+	public void setDishRating(int orderId, int dishId, int rating){
+		Order o=this.getOrder(orderId);
+		List<DishRating>drl= o.getDishRatings();
+		for(DishRating dr: drl){
+			if (dr.getDish().getDishId()==dishId)
+				dr.setRating(rating);
+		}
+		
 		this.dao.updateOrderDetails(o);
 	}
 
