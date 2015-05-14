@@ -14,6 +14,9 @@
 	id:${requestScope.patient.patientId} <br>
 	name:${requestScope.patient.name}<br> 
     bednr:${requestScope.patient.bednr}<br>
+	<c:forEach items="${requestScope.patient.restrictions}" var="restriction">
+		<p>Restriction: ${restriction.restrictionId} - ${restriction.name}</p>
+	</c:forEach>
 	<hr>
 	<c:if test="${order.hasRatings()==true}">
 	   <h3>Ratings are given, modification is disabled</h3>
