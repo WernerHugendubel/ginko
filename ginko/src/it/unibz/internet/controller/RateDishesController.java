@@ -60,6 +60,22 @@ public class RateDishesController extends HttpServlet {
 	protected void doPost(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
 		    // now rate the dish
+	    int rating = Integer.parseInt(request.getParameter("rating"));
+	    int orderId = Integer.parseInt(request.getParameter("orderId"));
+	    int dishId = Integer.parseInt(request.getParameter("dishId"));
+		    
+		this.mealReservationService.setDishRating(orderId, dishId, rating);
+		Order o = this.mealReservationService.getOrder(orderId);
+		request.setAttribute("order", o);
+		Patient pat = this.mealReservationService.getPatient(o.getPatientId());
+		request.setAttribute("patient",  pat);
+		//List<Dish> availdishes = this.mealReservationService.getDishsRated();
+		List<Dish> availdishes = this.mealReservationService.getAvailableDishs(o);
+		request.setAttribute("availabledishes", availdishes);
+		RequestDispatcher dispatcher = request
+				.getRequestDispatcher("/WEB-INF/jsp/rateDishes.jsp");
+		dispatcher.forward(request, response);
+
 
 	}
 

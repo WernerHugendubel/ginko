@@ -5,7 +5,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-<title>Order details</title>
+<title>Rating dishes</title>
 </head>
 <body>
 
@@ -24,13 +24,15 @@
 	</c:if>
 	<h4>Seleted dishes:</h4>
 	<c:forEach items="${order.dishRatings}" var="dishRating">
-	    ${dishRating.dish.dishId} - ${dishRating.dish.name}: <a href='${pageContext.request.contextPath}/orderDishes?orderId=${order.orderId}&dishId=${dishRating.dish.dishId}&action=removeDish'>remove...</a>
-		 <table><form action="/ginko/rateDishes?dishId=${dishRating.dish.dishId}?rate=1" method="post"> <input type="submit" value="rate 1"></form></table>
-	</c:forEach>
-	<hr>
-	<h4>Available dishes:</h4>
-	<c:forEach items="${availabledishes}" var="dish">
-	    ${dish.dishId} - ${dish.name}: <a href='${pageContext.request.contextPath}/orderDishes?orderId=${order.orderId}&dishId=${dish.dishId}&action=addDish'>select...</a><br>
+	    ${dishRating.dish.dishId} - ${dishRating.dish.name}: rating: ${dishRating.rating} 
+		 <table><tr>
+		 <td><form action="/ginko/rateDishes?orderId=${order.orderId}&dishId=${dishRating.dish.dishId}&rating=1" method="post"> <input type="submit" value="rate 1"></form></td>
+		 <td><form action="/ginko/rateDishes?orderId=${order.orderId}&dishId=${dishRating.dish.dishId}&rating=2" method="post"> <input type="submit" value="rate 2"></form></td>
+		 <td><form action="/ginko/rateDishes?orderId=${order.orderId}&dishId=${dishRating.dish.dishId}&rating=3" method="post"> <input type="submit" value="rate 3"></form></td>
+		 <td><form action="/ginko/rateDishes?orderId=${order.orderId}&dishId=${dishRating.dish.dishId}&rating=4" method="post"> <input type="submit" value="rate 4"></form></td>
+		 <td><form action="/ginko/rateDishes?orderId=${order.orderId}&dishId=${dishRating.dish.dishId}&rating=5" method="post"> <input type="submit" value="rate 5"></form></td>
+	</tr>
+	</table>
 	</c:forEach>
 	<hr>
 	<c:if test="${error  != null}">
