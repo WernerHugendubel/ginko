@@ -20,14 +20,14 @@ import javax.servlet.http.HttpServletResponse;
  * Servlet implementation class PatientController
  */
 @WebServlet("/rateDishes")
-public class DishesRateController extends HttpServlet {
+public class RateDishesController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	private MealReservationService mealReservationService;
 	/**
 	 * @see HttpServlet#HttpServlet()
 	 */
-	public DishesRateController() {
+	public RateDishesController() {
 		super();
 		this.mealReservationService = new MealReservationService();
 	}
@@ -44,30 +44,6 @@ public class DishesRateController extends HttpServlet {
 			//do nothing
 		}else if (action.equals("error")){
 			//do nothing
-		}else if (action.equals("addDish"))
-			//do nothing
-		{
-			//insert dish into orderdetails
-			int dishId=Integer.parseInt(request.getParameter("dishId"));
-			try {
-				this.mealReservationService.addDishToOrder(orderId, dishId);
-			} catch (Exception e) {
-				//pass exception to request 
-				request.setAttribute("error", e.getMessage());
-				request.setAttribute("action", "error");
-			}
-		}else if (action.equals("removeDish")){
-			//remove dish from orderdetails
-			int dishId=Integer.parseInt(request.getParameter("dishId"));
-			try{
-				this.mealReservationService.removeDishFromOrder(orderId, dishId);
-			}
-			catch (Exception e)
-			{
-				//pass exception to request 
-				request.setAttribute("error", e.getMessage());
-				request.setAttribute("action", "error");				
-			}
 		}
 		Order o = this.mealReservationService.getOrder(orderId);
 		request.setAttribute("order", o);
