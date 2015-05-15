@@ -18,10 +18,6 @@
 		<p>Restriction: ${restriction.restrictionId} - ${restriction.name}</p>
 	</c:forEach>
 	<hr>
-	<c:if test="${order.hasRatings()==true}">
-	   <h3 style="background:red">Ratings are given, modification is disabled</h3>
-	   <hr>
-	</c:if>
 	<h4>Seleted dishes:</h4>
 	<c:forEach items="${order.dishRatings}" var="dishRating">
 	    ${dishRating.dish.dishId} - ${dishRating.dish.name}: rating: ${dishRating.rating} 
