@@ -22,11 +22,11 @@
 	<c:forEach items="${order.dishRatings}" var="dishRating">
 	    ${dishRating.dish.dishId} - ${dishRating.dish.name}: rating: ${dishRating.rating} 
 		 <table><tr>
-		 <td><form action="/ginko/rateDishes?orderId=${order.orderId}&dishId=${dishRating.dish.dishId}&rating=1" method="post"> <input type="submit" value="rate 1"></form></td>
-		 <td><form action="/ginko/rateDishes?orderId=${order.orderId}&dishId=${dishRating.dish.dishId}&rating=2" method="post"> <input type="submit" value="rate 2"></form></td>
-		 <td><form action="/ginko/rateDishes?orderId=${order.orderId}&dishId=${dishRating.dish.dishId}&rating=3" method="post"> <input type="submit" value="rate 3"></form></td>
-		 <td><form action="/ginko/rateDishes?orderId=${order.orderId}&dishId=${dishRating.dish.dishId}&rating=4" method="post"> <input type="submit" value="rate 4"></form></td>
-		 <td><form action="/ginko/rateDishes?orderId=${order.orderId}&dishId=${dishRating.dish.dishId}&rating=5" method="post"> <input type="submit" value="rate 5"></form></td>
+		 <td><form action="rateDishes?orderId=${order.orderId}&dishId=${dishRating.dish.dishId}&rating=1" method="post"> <input type="submit" value="rate 1"></form></td>
+		 <td><form action="rateDishes?orderId=${order.orderId}&dishId=${dishRating.dish.dishId}&rating=2" method="post"> <input type="submit" value="rate 2"></form></td>
+		 <td><form action="rateDishes?orderId=${order.orderId}&dishId=${dishRating.dish.dishId}&rating=3" method="post"> <input type="submit" value="rate 3"></form></td>
+		 <td><form action="rateDishes?orderId=${order.orderId}&dishId=${dishRating.dish.dishId}&rating=4" method="post"> <input type="submit" value="rate 4"></form></td>
+		 <td><form action="rateDishes?orderId=${order.orderId}&dishId=${dishRating.dish.dishId}&rating=5" method="post"> <input type="submit" value="rate 5"></form></td>
 	</tr>
 	</table>
 	</c:forEach>
