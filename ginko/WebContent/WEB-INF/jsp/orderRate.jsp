@@ -28,7 +28,5 @@
 	    ${order.orderId} - ${order.orderDate} 	<a href='${pageContext.request.contextPath}/rateDishes?orderId=${order.orderId}'>rate dishes...</a> <p>
 	</c:forEach>
 	<hr>
-	<a href='${pageContext.request.contextPath}/orderAdd?patientId=${patient.patientId}'>add new order...</a>
-	<hr>
 </body>
 </html>
